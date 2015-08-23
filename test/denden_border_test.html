@@ -1,0 +1,119 @@
+<h1>ルビテスト</h1>
+<h2>基本パターン</h2>
+<p>文中で<ruby>電子出版<rt>でんししゅっぱん</rt></ruby>にグループルビがあるパターンである。</p>
+<p>文中で<ruby>電<rt>でん</rt>子<rt>し</rt>出<rt>しゅっ</rt>版<rt>ぱん</rt></ruby>にモノルビ風の熟語ルビがあるパターンである。</p>
+<p>文中で<ruby>電子出版<rt>でんししゅっぱん</rt></ruby>の親文字の文字数とルビ文字のまとまりの数が一致していないパターンである。</p>
+<h2>バリエーション</h2>
+<h2>エスケープ</h2>
+<p>文中で{電子出版|でんししゅっぱん}がエスケープされている例その一である。</p>
+<p>文中で{電子出版|でんししゅっぱん}がエスケープされている例その二である。</p>
+<p>文中で{電子出版|でんししゅっぱん}がエスケープされている例その三である。</p>
+<p>文中で{電子出版|でんししゅっぱん}がエスケープされている例その四である。</p>
+<p>文中で{電子出版|でんししゅっぱん}がエスケープされている例その五である。</p>
+<p>文中で{電子出版|でんししゅっぱん}がエスケープされている例その六である。</p>
+<p>文中で{電子出版|でんししゅっぱん}がエスケープされている例その七である。</p>
+<h1>縦中横テスト</h1>
+<h2>基本パターン</h2>
+<p><span class="tcy">21</span>世紀が文頭にある場合である。</p>
+<p>文中に<span class="tcy">21</span>世紀がある場合である。</p>
+<h2>エスケープ</h2>
+<p>\<span class="tcy">21</span>世紀が文頭エスケープされている例その一である。</p>
+<p><span class="tcy">21\</span>世紀が文頭エスケープされている例その二である。</p>
+<p>\<span class="tcy">21\</span>世紀が文頭エスケープされている例その三である。</p>
+<p>文中で\<span class="tcy">21</span>世紀がエスケープされている例その一である。</p>
+<p>文中で<span class="tcy">21\</span>世紀がエスケープされている例その二である。</p>
+<p>文中で\<span class="tcy">21\</span>世紀がエスケープされている例その三である。</p>
+<h1>ページ番号テスト</h1>
+<h2>基本パターン</h2>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+<div id="pagenum_15" class="pagenum" title="15" epub:type="pagebreak"></div>
+<div id="pagenum_157" class="pagenum" title="157" epub:type="pagebreak"></div>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak">5</div>
+<div id="pagenum_15" class="pagenum" title="15" epub:type="pagebreak">15</div>
+<div id="pagenum_157" class="pagenum" title="157" epub:type="pagebreak">157</div>
+<p>文中でページが<span id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></span>変わる例である。</p>
+<p>文中でページが<span id="pagenum_15" class="pagenum" title="15" epub:type="pagebreak"></span>変わる例である。</p>
+<p>文中でページが<span id="pagenum_15" class="pagenum" title="15" epub:type="pagebreak"></span>変わる例である。</p>
+<p>文中でページが<span id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak">5</span>変わりかつページ番号を表示している例である。</p>
+<p>文中でページが<span id="pagenum_15" class="pagenum" title="15" epub:type="pagebreak">15</span>変わりかつページ番号を表示している例である。</p>
+<p>文中でページが<span id="pagenum_157" class="pagenum" title="157" epub:type="pagebreak">157</span>変わりかつページ番号を表示している例である。</p>
+<h2>バリエーション</h2>
+<pre><code>[%5]
+
+[%%5]
+</code></pre>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak">5</div>
+<p>段落の末尾に接して位置している例である。<span id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></span></p>
+<p>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>段落の先頭に接して位置している例である。</p>
+<p>段落の後に改行して接している例である。<br />
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+</p>
+<p>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+<br />
+段落の前にありその後に段落が改行して接している例である。</p>
+<p>前後に段落が接している例である。こちらは前。<br />
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+<br />
+前後に段落が接している例である。こちらは後。</p>
+<h3>見出しの後に改行して接している例である。</h3>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+<h3>見出しの前に改行して接している例である。</h3>
+<h2>エスケープ</h2>
+<p>[%5]</p>
+<p>[%5]</p>
+<p>[\%5]</p>
+<p>[\%5]</p>
+<p>[%5]</p>
+<p>[\%5]</p>
+<p>[\%%5]</p>
+<h1>改ページ（ファイル分割）テスト</h1>
+<h2>基本パターン</h2>
+<hr class="docbreak" />
+<h2>バリエーション</h2>
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<hr class="docbreak" />
+<h1>段落に続けて改ページ（ファイル分割）を記述すると、見出しとして解釈されてしまう。</h1>
+<h2>エスケープ</h2>
+<p>\===</p>
+<p>\=\=\=</p>
+<h1>脚注テスト</h1>
+<h2>基本パターン</h2>
+<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+<p>これは脚注付き<a id="fnref_4" href="#fn_4" rel="footnote" class="noteref" epub:type="noteref">2</a>の段落です。</p>
+<p>これは脚注付き<a id="fnref_7" href="#fn_7" rel="footnote" class="noteref" epub:type="noteref">3</a>の段落です。</p>
+<h2>バリエーション</h2>
+<h2>エスケープ</h2>
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>そして、これが脚注です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+<li>
+<div id="fn_4" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_4">&#9166;</a></p>
+</div>
+</li>
+<li>
+<div id="fn_7" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_7">&#9166;</a></p>
+</div>
+</li>
+</ol>
+</div>
