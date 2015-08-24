@@ -5,7 +5,7 @@
 
 ## requirement
 
-Python-Markdown 6.2 or later.
+Python-Markdown 2.6 or later.
 
 
 ## install
