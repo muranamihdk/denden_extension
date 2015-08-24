@@ -33,4 +33,6 @@ or
 - EPUB pagebreak syntax: implemented
 - Chunk file syntax: implemented
 - Twitter account autolink syntax: NOT implemented
-- GFM style line break: implemented by Python-Markdown (reqire markdown.extensions.nl2br)
+
+The following is implemented by Python-Markdown (reqire markdown.extensions.nl2br)
+- GFM style line break
