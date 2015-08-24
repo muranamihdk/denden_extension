@@ -25,7 +25,7 @@ or
     $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension input.txt
 
 
-## implemented
+## features
 
 - Japanese Ruby Annotation: implemented
 - Tate-Chu-Yoko: implemented
@@ -36,3 +36,8 @@ or
 
 The following is implemented by Python-Markdown (requires markdown.extensions.nl2br).
 - GFM style line break
+
+
+## change log
+
+- 0.1 (2015-08-24) -- first experimental release
