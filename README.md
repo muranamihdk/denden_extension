@@ -40,4 +40,4 @@ The following is implemented by Python-Markdown (requires markdown.extensions.nl
 
 ## change log
 
-- 0.1 (2015-08-24) -- first experimental release
+- 0.1 (2015-08-23) -- first experimental release
