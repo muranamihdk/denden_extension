@@ -34,5 +34,5 @@ or
 - Chunk file syntax: implemented
 - Twitter account autolink syntax: NOT implemented
 
-The following is implemented by Python-Markdown (reqire markdown.extensions.nl2br)
+The following is implemented by Python-Markdown (reqire markdown.extensions.nl2br).
 - GFM style line break
