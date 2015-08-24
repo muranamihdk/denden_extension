@@ -5,7 +5,7 @@
 
 ## requirement
 
-[Python-Markdown](https://github.com/waylan/Python-Markdown) 6.2 or later.
+Python-Markdown 6.2 or later.
 
 
 ## install
