@@ -29,10 +29,10 @@ or
 
 - Japanese Ruby Annotation: implemented
 - Tate-Chu-Yoko: implemented
-- Footnotes with epub:type attribute: implemented (require markdown.extensions.extra or markdown.extensions.footnotes)
+- Footnotes with epub:type attribute: implemented (requires markdown.extensions.extra or markdown.extensions.footnotes)
 - EPUB pagebreak syntax: implemented
 - Chunk file syntax: implemented
 - Twitter account autolink syntax: NOT implemented
 
-The following is implemented by Python-Markdown (reqire markdown.extensions.nl2br).
+The following is implemented by Python-Markdown (requires markdown.extensions.nl2br).
 - GFM style line break
