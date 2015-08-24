@@ -18,7 +18,7 @@ setup (
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
     ],
-    keywords='markdown denden-markdown Japanese epub ruby',
+    keywords='markdown denden-markdown でんでんマークダウン Japanese epub ruby',
     py_modules=['denden_extension'],
     install_requires=['markdown>=2.6'],
 )
