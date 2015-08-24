@@ -32,5 +32,5 @@ or
 - Footnotes with epub:type attribute: implemented (require markdown.extensions.extra or markdown.extensions.footnotes)
 - EPUB pagebreak syntax: implemented
 - Chunk file syntax: implemented
-- GFM style line break: implemented with markdown.extensions.nl2br
 - Twitter account autolink syntax: NOT implemented
+- GFM style line break: implemented by Python-Markdown (reqire markdown.extensions.nl2br)
