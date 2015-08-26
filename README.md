@@ -3,6 +3,19 @@
 [Python-Markdown](https://github.com/waylan/Python-Markdown) extention for [Den-Den Markdown](https://github.com/denshoch/DenDenMarkdown).
 
 
+## features
+
+- Japanese Ruby Annotation: implemented
+- Tate-Chu-Yoko: implemented
+- Footnotes with epub:type attribute: implemented (requires markdown.extensions.extra or markdown.extensions.footnotes)
+- EPUB pagebreak syntax: implemented
+- Chunk file syntax: implemented
+- Twitter account autolink syntax: NOT implemented
+
+The following is implemented by Python-Markdown (requires markdown.extensions.nl2br).
+- GFM style line break
+
+
 ## requirement
 
 Python-Markdown 2.6 or later.
@@ -23,19 +36,6 @@ Python-Markdown 2.6 or later.
 or
 
     $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension input.txt
-
-
-## features
-
-- Japanese Ruby Annotation: implemented
-- Tate-Chu-Yoko: implemented
-- Footnotes with epub:type attribute: implemented (requires markdown.extensions.extra or markdown.extensions.footnotes)
-- EPUB pagebreak syntax: implemented
-- Chunk file syntax: implemented
-- Twitter account autolink syntax: NOT implemented
-
-The following is implemented by Python-Markdown (requires markdown.extensions.nl2br).
-- GFM style line break
 
 
 ## change log
