@@ -4,6 +4,8 @@ import markdown
 from denden_extension import DenDenExtension
 import sys
 import re
+import subprocess
+
 
 class TestSequenceFunctions(unittest.TestCase):
 
@@ -23,6 +25,18 @@ class TestSequenceFunctions(unittest.TestCase):
             with open('./test/denden_basic_test.html', 'r', encoding='utf-8') as f:
                 denden_basic_html = f.read().strip()
         denden_basic_html_gened = markdown.markdown(denden_basic_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+
+        self.assertEqual(denden_basic_html, denden_basic_html_gened)
+
+
+    def test_denden_basic_cmd(self):
+        if sys.version[0] == '2':
+            with open('./test/denden_basic_test.html', 'r') as f:
+                denden_basic_html = f.read().decode('utf-8').strip()
+        elif sys.version[0] == '3':
+            with open('./test/denden_basic_test.html', 'r', encoding='utf-8') as f:
+                denden_basic_html = f.read().strip()
+        denden_basic_html_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', 'test/denden_basic_test.txt'], universal_newlines=True).strip()
 
         self.assertEqual(denden_basic_html, denden_basic_html_gened)
 
