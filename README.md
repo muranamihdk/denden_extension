@@ -3,7 +3,7 @@
 [Python-Markdown](https://github.com/waylan/Python-Markdown) extention for [Den-Den Markdown](https://github.com/denshoch/DenDenMarkdown).
 
 
-## features
+## Features
 
 - Japanese Ruby Annotation: implemented
 - Tate-Chu-Yoko: implemented
@@ -16,17 +16,17 @@ The following is implemented by Python-Markdown (requires markdown.extensions.nl
 - GFM style line break
 
 
-## requirement
+## Requirement
 
 Python-Markdown 2.6 or later.
 
 
-## install
+## Install
 
     pip install denden_extension
 
 
-## usage
+## Usage
 
     >>> import markdown
     >>> from denden_extension import DenDenExtension
@@ -38,6 +38,6 @@ or
     $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension input.txt
 
 
-## change log
+## Change log
 
 - 0.1 (2015-08-23) -- first experimental release
