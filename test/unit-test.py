@@ -57,6 +57,18 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(denden_border_html, denden_border_html_gened)
 
 
+    def test_denden_border_cmd(self):
+        if sys.version[0] == '2':
+            with open('./test/denden_border_test.html', 'r') as f:
+                denden_border_html = f.read().decode('utf-8').strip()
+        elif sys.version[0] == '3':
+            with open('./test/denden_border_test.html', 'r', encoding='utf-8') as f:
+                denden_border_html = f.read().strip()
+        denden_border_html_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', 'test/denden_border_test.txt'], universal_newlines=True).strip()
+
+        self.assertEqual(denden_border_html, denden_border_html_gened)
+
+
     def test_kurofunezengo(self):
         if sys.version[0] == '2':
             with open('./test/kurofunezengo_test.txt', 'r') as f:
@@ -69,6 +81,18 @@ class TestSequenceFunctions(unittest.TestCase):
             with open('./test/kurofunezengo_test.html', 'r', encoding='utf-8') as f:
                 kurofunezengo_html = f.read().strip()
         kurofunezengo_html_gened = markdown.markdown(kurofunezengo_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+
+        self.assertEqual(kurofunezengo_html, kurofunezengo_html_gened)
+
+
+    def test_kurofunezengo_cmd(self):
+        if sys.version[0] == '2':
+            with open('./test/kurofunezengo_test.html', 'r') as f:
+                kurofunezengo_html = f.read().decode('utf-8').strip()
+        elif sys.version[0] == '3':
+            with open('./test/kurofunezengo_test.html', 'r', encoding='utf-8') as f:
+                kurofunezengo_html = f.read().strip()
+        kurofunezengo_html_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', 'test/kurofunezengo_test.txt'], universal_newlines=True).strip()
 
         self.assertEqual(kurofunezengo_html, kurofunezengo_html_gened)
 
