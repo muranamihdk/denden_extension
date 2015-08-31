@@ -13,6 +13,12 @@ class TestSequenceFunctions(unittest.TestCase):
         pass
         
 
+
+    ###
+    ###  The Utility Functions for the Test 
+    ###  ----------------------------------------------
+
+
     def assert_equal_with_files(self, mdfile, htmlfile):
         if sys.version[0] == '2':
             with open(mdfile, 'r') as f:
@@ -42,6 +48,24 @@ class TestSequenceFunctions(unittest.TestCase):
 
         self.assertEqual(html_text, html_text_gened)
 
+
+    def assert_equal(self, source, expected):
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+
+        self.assertEqual(expected, actual)
+
+
+    def assert_true(self, source, expected):
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+
+        self.assertTrue(re.match(expected, actual))
+
+
+
+    ###
+    ###  The Test Functions Start Here
+    ###  ----------------------------------------------
+    
 
     def test_denden_basic(self):
         mdfile = './test/denden_basic_test.txt'
@@ -79,10 +103,18 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
-    def test_import_extension_by_name(self):
+    def test_import_extension_by_name_1(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'])
+
+        self.assertEqual(expected, actual)
+
+
+    def test_import_extension_by_name_2(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
 
         self.assertEqual(expected, actual)
 
@@ -192,9 +224,8 @@ class TestSequenceFunctions(unittest.TestCase):
 これは別の段落です。"""
         expected = u"""<p>これは段落です。</p>
 <p>これは別の段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_new_line_in_paragraph(self):
@@ -205,9 +236,8 @@ class TestSequenceFunctions(unittest.TestCase):
         expected = u"""<p>これは段落です。<br />
 これは段落の続きです。</p>
 <p>これは別の段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_indent_at_top_of_line(self):
@@ -216,9 +246,8 @@ class TestSequenceFunctions(unittest.TestCase):
 これは字下げしない段落です。"""
         expected = u"""<p>　これは字下げする段落です。</p>
 <p>これは字下げしない段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_header_atx(self):
@@ -242,9 +271,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <h5>見出しレベル5</h5>
 <h6>見出しレベル6</h6>
 <h3>見出しレベル3</h3>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_header_setext(self):
@@ -263,9 +291,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <h2>見出しレベル2</h2>
 <h1>見出しレベル1</h1>
 <h2>見出しレベル2</h2>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_quote(self):
@@ -300,9 +327,8 @@ class TestSequenceFunctions(unittest.TestCase):
 </blockquote>
 </blockquote>
 <p>これは通常の段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_list_1(self):
@@ -314,9 +340,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <li>もも</li>
 <li>みかん</li>
 </ul>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_list_2(self):
@@ -328,9 +353,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <li>もも</li>
 <li>みかん</li>
 </ul>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_list_3(self):
@@ -342,9 +366,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <li>もも</li>
 <li>みかん</li>
 </ul>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_ordered_list(self):
@@ -356,17 +379,15 @@ class TestSequenceFunctions(unittest.TestCase):
 <li>もも</li>
 <li>みかん</li>
 </ol>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_ordered_list_escaped(self):
         source = u"""1986\. What a great season."""
         expected = u"""<p>1986. What a great season.</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_list_with_paragraph(self):
@@ -381,9 +402,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <p>これも箇条書きの中の段落です。</p>
 </li>
 </ul>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_list_with_multi_paragraphs(self):
@@ -401,9 +421,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <p>これは別の箇条書きの中の段落です。</p>
 </li>
 </ul>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_list_with_quote(self):
@@ -423,9 +442,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <p>これは別の箇条書きの中の段落です。</p>
 </li>
 </ul>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_list_with_code(self):
@@ -448,9 +466,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <p>これは別の箇条書きの中の段落です。</p>
 </li>
 </ul>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_code_block(self):
@@ -467,17 +484,15 @@ class TestSequenceFunctions(unittest.TestCase):
 &lt;/body&gt;
 </code></pre>
 <p>これは別の段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_code_inline(self):
         source = u"""段落には`<p>`タグを使います。"""
         expected = u"""<p>段落には<code>&lt;p&gt;</code>タグを使います。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_horizontal_line(self):
@@ -498,9 +513,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <hr />
 <hr />
 <hr />"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_doc_break(self):
@@ -512,9 +526,8 @@ class TestSequenceFunctions(unittest.TestCase):
         expected = u"""<p>これは通常の段落です。</p>
 <hr class="docbreak" />
 <h2>大見出し</h2>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_page_number_1(self):
@@ -523,17 +536,15 @@ class TestSequenceFunctions(unittest.TestCase):
 ## 大見出し ##"""
         expected = u"""<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
 <h2>大見出し</h2>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_page_number_2(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ<span id="pagenum_24" class="pagenum" title="24" epub:type="pagebreak"></span>される段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_page_number_3(self):
@@ -542,25 +553,22 @@ class TestSequenceFunctions(unittest.TestCase):
 ## 大見出し ##"""
         expected = u"""<div id="pagenum_36" class="pagenum" title="36" epub:type="pagebreak">36</div>
 <h2>大見出し</h2>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_hyperlink_direct_1(self):
         source = u"""詳しくは[こちら](http://example.com/)をごらんください。"""
         expected = u"""<p>詳しくは<a href="http://example.com/">こちら</a>をごらんください。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_hyperlink_direct_2(self):
         source = u"""詳しくは[こちら](http://example.com/ "タイトル")をごらんください。"""
         expected = u"""<p>詳しくは<a href="http://example.com/" title="タイトル">こちら</a>をごらんください。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_hyperlink_indirect_1(self):
@@ -568,9 +576,8 @@ class TestSequenceFunctions(unittest.TestCase):
 
 [example]: http://example.com/"""
         expected = u"""<p>詳しくは<a href="http://example.com/">こちら</a>をごらんください。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_hyperlink_indirect_2(self):
@@ -578,9 +585,8 @@ class TestSequenceFunctions(unittest.TestCase):
 
 [example]: http://example.com/ "タイトル\""""
         expected = u"""<p>詳しくは<a href="http://example.com/" title="タイトル">こちら</a>をごらんください。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_hyperlink_indirect_3(self):
@@ -588,9 +594,8 @@ class TestSequenceFunctions(unittest.TestCase):
 
 [Daring Fireball]: http://daringfireball.net/"""
         expected = u"""<p>オリジナルのMarkdownは<a href="http://daringfireball.net/">Daring Fireball</a>で公開されています。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_hyperlink_auto(self):
@@ -599,9 +604,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <info@example.com>"""
         expected = r"""<p><a href="http://example.com">http://example.com</a></p>
 <p><a href="[&#0-9;xA-E]+?">[&#0-9;xA-E]+?</a></p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertTrue(re.match(expected, actual))
+        self.assert_true(source, expected)
 
 
     def test_emphasis_1(self):
@@ -610,9 +614,8 @@ class TestSequenceFunctions(unittest.TestCase):
 これは**重要なテキスト**です。"""
         expected = u"""<p>これは<em>強調されたテキスト</em>です。</p>
 <p>これは<strong>重要なテキスト</strong>です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_emphasis_2(self):
@@ -623,76 +626,67 @@ class TestSequenceFunctions(unittest.TestCase):
 <p>これは<strong>重要なテキスト</strong>です。</p>"""
         py_markdown = u"""<p>これは_強調されたテキスト_です。</p>
 <p>これは__重要なテキスト__です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        #self.assertEqual(expected, actual)
-        self.assertEqual(py_markdown, actual)
+        #self.assert_equal(source, expected)
+        self.assert_equal(source, py_markdown)
 
 
     def test_emphasis_3(self):
         source = u"""Please open the folder "secret_magic_box"."""
         expected = u"""<p>Please open the folder "secret_magic_box".</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_ruby_grouped(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_ruby_mono(self):
         source = u"""{電子出版|でん|し|しゅっ|ぱん}を手軽に"""
         expected = u"""<p><ruby>電<rt>でん</rt>子<rt>し</rt>出<rt>しゅっ</rt>版<rt>ぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_ruby_not_1(self):
         source = u"""これは段落です。foo{|bar| bar.buz} これは段落です。"""
         expected = u"""<p>これは段落です。foo{|bar| bar.buz} これは段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_ruby_not_2(self):
         source = u"""これは段落です。\{Info\|Warning\} これは段落です。"""
         expected = u"""<p>これは段落です。&#123;Info&#124;Warning&#125; これは段落です。</p>"""
         py_markdown = u"""<p>これは段落です。{Info|Warning} これは段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_ruby_not_3(self):
         source = u"""これは段落です。{Info\|Warning} これは段落です。"""
         expected = u"""<p>これは段落です。{Info&#124;Warning} これは段落です。</p>"""
         py_markdown = u"""<p>これは段落です。{Info|Warning} これは段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_ruby_not_4(self):
         source = u"""これは段落です。`{Info|Warning}` これは段落です。"""
         expected = u"""<p>これは段落です。<code>{Info|Warning}</code> これは段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_tate_chu_yoko(self):
         source = u"""昭和^53^年"""
         expected = u"""<p>昭和<span class="tcy">53</span>年</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_footenote_1(self):
@@ -724,9 +718,8 @@ class TestSequenceFunctions(unittest.TestCase):
 </li>
 </ol>
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_footenote_2(self):
@@ -763,9 +756,8 @@ class TestSequenceFunctions(unittest.TestCase):
 </li>
 </ol>
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_footenote_3(self):
@@ -805,27 +797,24 @@ class TestSequenceFunctions(unittest.TestCase):
 </li>
 </ol>
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_img_direct_1(self):
         source = u"""![代替テキスト](img.jpg)"""
         expected = u"""<p><img src="img.jpg" alt="代替テキスト" /></p>"""
         py_markdown = u"""<p><img alt="代替テキスト" src="img.jpg" /></p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_img_direct_2(self):
         source = u"""![](img.jpg)"""
         expected = u"""<p><img src="img.jpg" alt="" /></p>"""
         py_markdown = u"""<p><img alt="" src="img.jpg" /></p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_img_indirect(self):
@@ -835,9 +824,8 @@ class TestSequenceFunctions(unittest.TestCase):
         expected = u"""<p><img src="img.jpg" alt="代替テキスト" /></p>
 """
         py_markdown = u"""<p><img alt="代替テキスト" src="img.jpg" /></p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(py_markdown, actual)
+        self.assert_equal(source, py_markdown)
 
 
     def test_definition_list_1(self):
@@ -852,9 +840,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <dt>でんでんコンバーター</dt>
 <dd>でんでんマークダウンをEPUBに変換するウェブサービス</dd>
 </dl>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_definition_list_2(self):
@@ -873,9 +860,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <dd>「電書ちゃんによる電書ちゃんのためのMarkdown拡張記法対応EPUBコンバーター」の略称</dd>
 <dd>でんでんマークダウンをEPUBに変換するウェブサービス</dd>
 </dl>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_definition_list_3(self):
@@ -896,9 +882,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <p>でんでんマークダウンをEPUBに変換するウェブサービス</p>
 </dd>
 </dl>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_definition_list_4(self):
@@ -944,9 +929,8 @@ class TestSequenceFunctions(unittest.TestCase):
 </ol>
 </dd>
 </dl>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_table(self):
@@ -972,17 +956,15 @@ class TestSequenceFunctions(unittest.TestCase):
 </tr>
 </tbody>
 </table>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_html_1(self):
         source = u"""これは段落の中で本の<cite>タイトル</cite>に直接HTMLでマークアップした例です。"""
         expected = u"""<p>これは段落の中で本の<cite>タイトル</cite>に直接HTMLでマークアップした例です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_html_2(self):
@@ -995,9 +977,8 @@ class TestSequenceFunctions(unittest.TestCase):
 <div>
 **ブロックの中の段落**はMarkdownが解釈されません。
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_html_3(self):
@@ -1010,17 +991,15 @@ class TestSequenceFunctions(unittest.TestCase):
 <div>
 <p><strong>ブロックの中の段落</strong>でもMarkdownが解釈されます。</p>
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_(self):
         source = u""""""
         expected = u""""""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
 
