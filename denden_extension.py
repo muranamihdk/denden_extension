@@ -76,7 +76,7 @@ class DenDenExtension(Extension):
         if self.getConfig('docbreak'):
             md.parser.blockprocessors.add('doc_break', DocBreakProcessor(md.parser), '>hr')
         if self.getConfig('pagenum'):
-            md.parser.blockprocessors.add('page_unm', PageNumProcessor(md.parser), '<paragraph')
+            md.parser.blockprocessors.add('page_num', PageNumProcessor(md.parser), '<paragraph')
 
         # Add inline patterns.
         md.inlinePatterns['escape'] = DenDenEscapePattern(ESCAPE_RE, md) 
