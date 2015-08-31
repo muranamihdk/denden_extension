@@ -11,7 +11,6 @@ class TestSequenceFunctions(unittest.TestCase):
 
     def setUp(self):
         pass
-        
 
 
     ###
@@ -106,17 +105,15 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_import_extension_by_name_1(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_import_extension_by_name_2(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
 
-        self.assertEqual(expected, actual)
+        self.assert_equal(source, expected)
 
 
     def test_omit_doc_break_1(self):
