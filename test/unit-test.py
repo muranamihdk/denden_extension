@@ -108,7 +108,7 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_omit_doc_break_1(self):
         source = u"""==="""
         expected = u"""<p>===</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(doc_break=False)])
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(docbreak=False)])
 
         self.assertEqual(expected, actual)
 
@@ -116,7 +116,7 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_omit_doc_break_2(self):
         source = u"""==="""
         expected = u"""<p>===</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'doc_break': False}})
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'docbreak': False}})
 
         self.assertEqual(expected, actual)
 
@@ -124,7 +124,7 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_omit_doc_break_3(self):
         source = u"""==="""
         expected = u"""<p>===</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'doc_break': False}})
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'docbreak': False}})
 
         self.assertEqual(expected, actual)
 

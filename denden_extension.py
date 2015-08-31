@@ -62,7 +62,7 @@ class DenDenExtension(Extension):
 
     def __init__(self, *args, **kwargs):
         self.config = {
-            'doc_break' : [True, 'Insert Documentation Breaks.'],
+            'docbreak' : [True, 'Insert Documentation Breaks.'],
             'page_num' : [True, 'Insert Page Numbers.'],
             'footnote_sub' : [True, 'Substitute Footnotes for XHTML and Epub Format.']}
         super(DenDenExtension, self).__init__(**kwargs)        
@@ -73,7 +73,7 @@ class DenDenExtension(Extension):
         md.preprocessors.add('two_bytes_space', TwoBytesSpacePreprocessor(), '_begin')
         
         # Add blockprocessors.
-        if self.getConfig('doc_break'):
+        if self.getConfig('docbreak'):
             md.parser.blockprocessors.add('doc_break', DocBreakProcessor(md.parser), '>hr')
         if self.getConfig('page_num'):
             md.parser.blockprocessors.add('page_unm', PageNumProcessor(md.parser), '<paragraph')
