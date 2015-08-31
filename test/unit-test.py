@@ -13,88 +13,70 @@ class TestSequenceFunctions(unittest.TestCase):
         pass
         
 
-    def test_denden_basic(self):
+    def assert_equal_with_files(self, mdfile, htmlfile):
         if sys.version[0] == '2':
-            with open('./test/denden_basic_test.txt', 'r') as f:
-                denden_basic_text = f.read().decode('utf-8')
-            with open('./test/denden_basic_test.html', 'r') as f:
-                denden_basic_html = f.read().decode('utf-8').strip()
+            with open(mdfile, 'r') as f:
+                md_text = f.read().decode('utf-8')
+            with open(htmlfile, 'r') as f:
+                html_text = f.read().decode('utf-8').strip()
         elif sys.version[0] == '3':
-            with open('./test/denden_basic_test.txt', 'r', encoding='utf-8') as f:
-                denden_basic_text = f.read()
-            with open('./test/denden_basic_test.html', 'r', encoding='utf-8') as f:
-                denden_basic_html = f.read().strip()
-        denden_basic_html_gened = markdown.markdown(denden_basic_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+            with open(mdfile, 'r', encoding='utf-8') as f:
+                md_text = f.read()
+            with open(htmlfile, 'r', encoding='utf-8') as f:
+                html_text = f.read().strip()
+        html_text_gened = markdown.markdown(md_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 
-        self.assertEqual(denden_basic_html, denden_basic_html_gened)
+        self.assertEqual(html_text, html_text_gened)
+
+
+    def assert_equal_with_files_cmd(self, mdfile, htmlfile):
+        if sys.version[0] == '2':
+            with open(htmlfile, 'r') as f:
+                html_text = f.read().decode('utf-8').strip()
+        elif sys.version[0] == '3':
+            with open(htmlfile, 'r', encoding='utf-8') as f:
+                html_text = f.read().strip()
+        html_text_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', mdfile], universal_newlines=True).strip()
+        if sys.version[0] == '2':
+            html_text_gened = html_text_gened.decode('utf-8')
+
+        self.assertEqual(html_text, html_text_gened)
+
+
+    def test_denden_basic(self):
+        mdfile = './test/denden_basic_test.txt'
+        htmlfile = './test/denden_basic_test.html'
+        self.assert_equal_with_files(mdfile, htmlfile)
 
 
     def test_denden_basic_cmd(self):
-        if sys.version[0] == '2':
-            with open('./test/denden_basic_test.html', 'r') as f:
-                denden_basic_html = f.read().decode('utf-8').strip()
-        elif sys.version[0] == '3':
-            with open('./test/denden_basic_test.html', 'r', encoding='utf-8') as f:
-                denden_basic_html = f.read().strip()
-        denden_basic_html_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', 'test/denden_basic_test.txt'], universal_newlines=True).strip()
-
-        self.assertEqual(denden_basic_html, denden_basic_html_gened)
-
-
+        mdfile = './test/denden_basic_test.txt'
+        htmlfile = './test/denden_basic_test.html'
+        self.assert_equal_with_files_cmd(mdfile, htmlfile)
+        
+        
     def test_denden_border(self):
-        if sys.version[0] == '2':
-            with open('./test/denden_border_test.txt', 'r') as f:
-                denden_border_text = f.read().decode('utf-8')
-            with open('./test/denden_border_test.html', 'r') as f:
-                denden_border_html = f.read().decode('utf-8').strip()
-        elif sys.version[0] == '3':
-            with open('./test/denden_border_test.txt', 'r', encoding='utf-8') as f:
-                denden_border_text = f.read()
-            with open('./test/denden_border_test.html', 'r', encoding='utf-8') as f:
-                denden_border_html = f.read().strip()
-        denden_border_html_gened = markdown.markdown(denden_border_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
-
-        self.assertEqual(denden_border_html, denden_border_html_gened)
+        mdfile = './test/denden_border_test.txt'
+        htmlfile = './test/denden_border_test.html'
+        self.assert_equal_with_files(mdfile, htmlfile)
 
 
     def test_denden_border_cmd(self):
-        if sys.version[0] == '2':
-            with open('./test/denden_border_test.html', 'r') as f:
-                denden_border_html = f.read().decode('utf-8').strip()
-        elif sys.version[0] == '3':
-            with open('./test/denden_border_test.html', 'r', encoding='utf-8') as f:
-                denden_border_html = f.read().strip()
-        denden_border_html_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', 'test/denden_border_test.txt'], universal_newlines=True).strip()
-
-        self.assertEqual(denden_border_html, denden_border_html_gened)
+        mdfile = './test/denden_border_test.txt'
+        htmlfile = './test/denden_border_test.html'
+        self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
     def test_kurofunezengo(self):
-        if sys.version[0] == '2':
-            with open('./test/kurofunezengo_test.txt', 'r') as f:
-                kurofunezengo_text = f.read().decode('utf-8')
-            with open('./test/kurofunezengo_test.html', 'r') as f:
-                kurofunezengo_html = f.read().decode('utf-8').strip()
-        elif sys.version[0] == '3':
-            with open('./test/kurofunezengo_test.txt', 'r', encoding='utf-8') as f:
-                kurofunezengo_text = f.read()
-            with open('./test/kurofunezengo_test.html', 'r', encoding='utf-8') as f:
-                kurofunezengo_html = f.read().strip()
-        kurofunezengo_html_gened = markdown.markdown(kurofunezengo_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
-
-        self.assertEqual(kurofunezengo_html, kurofunezengo_html_gened)
+        mdfile = './test/kurofunezengo_test.txt'
+        htmlfile = './test/kurofunezengo_test.html'
+        self.assert_equal_with_files(mdfile, htmlfile)
 
 
     def test_kurofunezengo_cmd(self):
-        if sys.version[0] == '2':
-            with open('./test/kurofunezengo_test.html', 'r') as f:
-                kurofunezengo_html = f.read().decode('utf-8').strip()
-        elif sys.version[0] == '3':
-            with open('./test/kurofunezengo_test.html', 'r', encoding='utf-8') as f:
-                kurofunezengo_html = f.read().strip()
-        kurofunezengo_html_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', 'test/kurofunezengo_test.txt'], universal_newlines=True).strip()
-
-        self.assertEqual(kurofunezengo_html, kurofunezengo_html_gened)
+        mdfile = './test/kurofunezengo_test.txt'
+        htmlfile = './test/kurofunezengo_test.html'
+        self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
     def test_import_extension_by_name(self):
