@@ -60,7 +60,7 @@ The DenDen Markdown Extension Class
 class DenDenExtension(Extension):
     """ DenDen Extension for Python-Markdown. """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         self.config = {
             'docbreak' : [True, 'Insert Documentation Breaks.'],
             'pagenum' : [True, 'Insert Page Numbers.'],
