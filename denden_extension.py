@@ -63,7 +63,7 @@ class DenDenExtension(Extension):
     def __init__(self, *args, **kwargs):
         self.config = {
             'docbreak' : [True, 'Insert Documentation Breaks.'],
-            'page_num' : [True, 'Insert Page Numbers.'],
+            'pagenum' : [True, 'Insert Page Numbers.'],
             'footnote_sub' : [True, 'Substitute Footnotes for XHTML and Epub Format.']}
         super(DenDenExtension, self).__init__(**kwargs)        
         
@@ -75,12 +75,12 @@ class DenDenExtension(Extension):
         # Add blockprocessors.
         if self.getConfig('docbreak'):
             md.parser.blockprocessors.add('doc_break', DocBreakProcessor(md.parser), '>hr')
-        if self.getConfig('page_num'):
+        if self.getConfig('pagenum'):
             md.parser.blockprocessors.add('page_unm', PageNumProcessor(md.parser), '<paragraph')
 
         # Add inline patterns.
         md.inlinePatterns['escape'] = DenDenEscapePattern(ESCAPE_RE, md) 
-        if self.getConfig('page_num'):
+        if self.getConfig('pagenum'):
             try:
                 md.inlinePatterns.add('page_num', PageNumTagPattern(PAGE_NUM_INLINE_RE), '>strong2')
             except ValueError:
@@ -92,7 +92,7 @@ class DenDenExtension(Extension):
         md.inlinePatterns.add('denden_tate_chu_yoko', TateChuYokoTagPattern(TATE_CHU_YOKO_RE, 'span'), '>denden_ruby')
         
         # Add postprocessors.
-        if self.getConfig('page_num'):
+        if self.getConfig('pagenum'):
             md.postprocessors.add('page_num', PageNumPostprocessor(), '_end')
         if self.getConfig('footnote_sub'):
             try:

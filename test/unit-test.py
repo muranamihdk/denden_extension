@@ -132,7 +132,7 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_omit_page_num_1(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ[%24]される段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(page_num=False)])
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(pagenum=False)])
 
         self.assertEqual(expected, actual)
 
@@ -140,7 +140,7 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_omit_page_num_2(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ[%24]される段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'page_num': False}})
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'pagenum': False}})
 
         self.assertEqual(expected, actual)
 
@@ -148,7 +148,7 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_omit_page_num_3(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ[%24]される段落です。</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'page_num': False}})
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'pagenum': False}})
 
         self.assertEqual(expected, actual)
 
