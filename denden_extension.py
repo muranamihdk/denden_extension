@@ -64,7 +64,7 @@ class DenDenExtension(Extension):
         self.config = {
             'docbreak' : [True, 'Insert Documentation Breaks.'],
             'pagenum' : [True, 'Insert Page Numbers.'],
-            'footnote_sub' : [True, 'Substitute Footnotes for XHTML and Epub Format.']}
+            'footnote' : [True, 'Substitute Footnotes for XHTML and Epub Format.']}
         super(DenDenExtension, self).__init__(**kwargs)        
         
     def extendMarkdown(self, md, md_globals):
@@ -94,7 +94,7 @@ class DenDenExtension(Extension):
         # Add postprocessors.
         if self.getConfig('pagenum'):
             md.postprocessors.add('page_num', PageNumPostprocessor(), '_end')
-        if self.getConfig('footnote_sub'):
+        if self.getConfig('footnote'):
             try:
                 md.postprocessors.add('footnote_sub', FootnoteSubPostprocessor(), '>footnote')
             except ValueError:

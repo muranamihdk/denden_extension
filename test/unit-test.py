@@ -165,7 +165,7 @@ class TestSequenceFunctions(unittest.TestCase):
 </li>
 </ol>
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(footnote_sub=False)])
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(footnote=False)])
 
         self.assertEqual(expected, actual)
 
@@ -182,7 +182,7 @@ class TestSequenceFunctions(unittest.TestCase):
 </li>
 </ol>
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'footnote_sub': False}})
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'footnote': False}})
 
         self.assertEqual(expected, actual)
 
@@ -199,7 +199,7 @@ class TestSequenceFunctions(unittest.TestCase):
 </li>
 </ol>
 </div>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'footnote_sub': False}})
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'footnote': False}})
 
         self.assertEqual(expected, actual)
 
