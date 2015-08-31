@@ -5,7 +5,7 @@ Den-Den Extension for Python-Markdown
 
 Adds Den-Den Markdown handling to Python-Markdown.
 
-See <https://sample.org/index.html>
+See <https://github.com/muranamihdk/denden_extension>
 for documentation.
 
 Copyright (c) 2015 MURANAMI Hideaki
