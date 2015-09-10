@@ -65,13 +65,13 @@ class DenDenExtension(Extension):
             'docbreak' : [True, 'Insert Documentation Breaks.'],
             'pagenum' : [True, 'Insert Page Numbers.'],
             'footnote' : [True, 'Substitute Footnotes for XHTML and Epub Format.']}
-        super(DenDenExtension, self).__init__(**kwargs)        
-        
+        super(DenDenExtension, self).__init__(**kwargs)
+
     def extendMarkdown(self, md, md_globals):
-        
+
         # Add preprocessors.
         md.preprocessors.add('two_bytes_space', TwoBytesSpacePreprocessor(), '_begin')
-        
+
         # Add blockprocessors.
         if self.getConfig('docbreak'):
             md.parser.blockprocessors.add('doc_break', DocBreakProcessor(md.parser), '>hr')
@@ -79,7 +79,7 @@ class DenDenExtension(Extension):
             md.parser.blockprocessors.add('page_num', PageNumProcessor(md.parser), '<paragraph')
 
         # Add inline patterns.
-        md.inlinePatterns['escape'] = DenDenEscapePattern(ESCAPE_RE, md) 
+        md.inlinePatterns['escape'] = DenDenEscapePattern(ESCAPE_RE, md)
         if self.getConfig('pagenum'):
             try:
                 md.inlinePatterns.add('page_num', PageNumTagPattern(PAGE_NUM_INLINE_RE), '>strong2')
@@ -88,9 +88,9 @@ class DenDenExtension(Extension):
         try:
             md.inlinePatterns.add('denden_ruby', RubyTagPattern(RUBY_RE, 'ruby,rt'), '>page_num')
         except ValueError:
-            md.inlinePatterns.add('denden_ruby', RubyTagPattern(RUBY_RE, 'ruby,rt'), '_end')            
+            md.inlinePatterns.add('denden_ruby', RubyTagPattern(RUBY_RE, 'ruby,rt'), '_end')
         md.inlinePatterns.add('denden_tate_chu_yoko', TateChuYokoTagPattern(TATE_CHU_YOKO_RE, 'span'), '>denden_ruby')
-        
+
         # Add postprocessors.
         if self.getConfig('pagenum'):
             md.postprocessors.add('page_num', PageNumPostprocessor(), '_end')
@@ -100,7 +100,7 @@ class DenDenExtension(Extension):
             except ValueError:
                 md.postprocessors.add('footnote_sub', FootnoteSubPostprocessor(), '_end')
         md.postprocessors.add('two_bytes_space', TwoBytesSpacePostprocessor(), '_end')
-            
+
 
 
 """
@@ -144,7 +144,7 @@ class DocBreakProcessor(BlockProcessor):
 class PageNumProcessor(BlockProcessor):
     """ Process Page Numbers. """
     RE = re.compile(PAGE_NUM_RE)
-    
+
     def test(self, parent, block):
         return bool(self.RE.search(block))
 
@@ -244,7 +244,7 @@ class PageNumPostprocessor(Postprocessor):
         text = self.DIV_RE.sub(self.sub_div, text)
         text = self.SPAN_RE.sub(self.sub_span, text)
         return text
-        
+
 
 class FootnoteSubPostprocessor(Postprocessor):
     """ Substitute Footnotes for XHTML and Epub Format. """
@@ -267,7 +267,7 @@ class FootnoteSubPostprocessor(Postprocessor):
         text = self.FOOT_NOTE_ANCHOR_RE.sub(self.sub_anc, text)
         text = self.FOOT_NOTE_TARGET_RE.sub(self.sub_tgt, text)
         return text
-        
+
 
 class TwoBytesSpacePostprocessor(Postprocessor):
     """ Two bytes Space. """
