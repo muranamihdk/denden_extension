@@ -7,7 +7,7 @@ import re
 import subprocess
 
 
-class TestSequenceFunctions(unittest.TestCase):
+class DenDenExtensionTestCases(unittest.TestCase):
 
     def setUp(self):
         pass
