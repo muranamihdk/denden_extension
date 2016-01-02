@@ -27,15 +27,19 @@ or
 
 ## Features
 
-- Japanese Ruby Annotation: implemented
-- Tate-Chu-Yoko: implemented
-- Footnotes with epub:type attribute: implemented (requires markdown.extensions.extra or markdown.extensions.footnotes)
-- EPUB pagebreak syntax: implemented
-- Chunk file syntax: implemented
-- Twitter account autolink syntax: NOT implemented
+- Japanese Ruby Annotation
+- Tate-Chu-Yoko
+- Footnotes with epub:type attribute (requires markdown.extensions.extra or markdown.extensions.footnotes)
+- EPUB pagebreak syntax
+- Chunk file syntax
 
-The following is implemented by markdown.extensions.nl2br, which is included in Python-Markdown.
+The following is implemented by markdown.extensions.nl2br which is included in Python-Markdown.
+
 - GFM style line break
+
+The following is not implemented.
+
+- Twitter account autolink syntax
 
 
 ## Change log
