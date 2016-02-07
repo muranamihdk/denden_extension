@@ -1,7 +1,6 @@
 # denden_extension
 
-[Python-Markdown](https://github.com/waylan/Python-Markdown) extention for [Den-Den Markdown](https://github.com/denshoch/DenDenMarkdown).
-
+Denden_extension is a [Python-Markdown](https://github.com/waylan/Python-Markdown) extention for using [Den-Den Markdown](https://github.com/denshoch/DenDenMarkdown) syntax in Python-Markdown.
 
 ## Requirement
 
@@ -17,13 +16,14 @@ Python-Markdown 2.6 or later.
 
     >>> import markdown
     >>> from denden_extension import DenDenExtension
-    >>> markdown.markdown('{電子出版|でんししゅっぱん}を手軽に', extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+    >>> markdown_text = '{電子出版|でんししゅっぱん}を手軽に'
+    >>> html_text = markdown.markdown(markdown_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+    >>> html_text
     '<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>'
 
 or
 
-    $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension input.txt
-
+    $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension markdown_text.md > html_text.html
 
 ## Features
 
