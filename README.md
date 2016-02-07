@@ -1,6 +1,6 @@
 # denden_extension
 
-Denden_extension is a [Python-Markdown](https://github.com/waylan/Python-Markdown) extention for using [Den-Den Markdown](https://github.com/denshoch/DenDenMarkdown) syntax in Python-Markdown.
+Denden_extension is a [Python-Markdown](https://github.com/waylan/Python-Markdown) extension for using [Den-Den Markdown](https://github.com/denshoch/DenDenMarkdown) syntax in Python-Markdown.
 
 ## Requirement
 
