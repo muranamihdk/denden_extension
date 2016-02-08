@@ -35,7 +35,7 @@ Denden_extension enables the following syntax of Den-Den Markdown in Python-Mark
 - EPUB pagebreak syntax
 - Chunk file syntax
 
-The following is enabled by markdown.extensions.nl2br which is included in Python-Markdown.
+The following is enabled by markdown.extensions.nl2br. Den-Den Markdown adopts GFM style line break. 
 
 - GFM style line break
 
