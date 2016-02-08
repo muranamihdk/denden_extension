@@ -27,7 +27,7 @@ or
 
 ## Features
 
-Denden_extension enables the following Den-Den Markdown syntax in Python-Markdown.
+Denden_extension enables the following syntax of Den-Den Markdown in Python-Markdown.
 
 - Japanese Ruby Annotation
 - Tate-Chu-Yoko
@@ -38,6 +38,8 @@ Denden_extension enables the following Den-Den Markdown syntax in Python-Markdow
 The following is enabled by markdown.extensions.nl2br which is included in Python-Markdown.
 
 - GFM style line break
+
+markdown.extensions.extra, markdown.extensions.footnotes and markdown.extensions.nl2br are extensions included with Python Markdown.
 
 The following is not implemented in denden_extension.
 
