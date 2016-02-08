@@ -27,7 +27,7 @@ or
     $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension markdown_text.md > html_text.html
 
 
-## Features
+## Description
 
 Denden_extension enables the following syntax of Den-Den Markdown in Python-Markdown.
 
