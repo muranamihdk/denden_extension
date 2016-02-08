@@ -40,7 +40,7 @@ Denden_extension enables the following syntax of Den-Den Markdown in Python-Mark
 - [Chunk file syntax](http://conv.denshochan.com/markdown#docbreak)*2
 
 *1 Denden_extension depends on the Python-Markdown's footnotes extension for implementing this feature. So you also need the [markdown.extensions.footnotes](https://pythonhosted.org/Markdown/extensions/footnotes.html) or [markdown.extensions.extra](https://pythonhosted.org/Markdown/extensions/extra.html) which includes the footnotes extension.  
-*2 Three or more equal signs on a line by themselves is replaced by a horizontal rule tag with docbreak class attribute(<hr class="docbreak" />).
+*2 Three or more equal signs on a line by themselves is replaced by a horizontal rule tag with docbreak class attribute(\<hr class="docbreak" /\>).
 
 Den-Den Markdown inherits its syntax from [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/). In Python-Markdown, [markdown.extensions.extra](https://pythonhosted.org/Markdown/extensions/extra.html) and [markdown.extensions.sane_lists](https://pythonhosted.org/Markdown/extensions/sane_lists.html), which are included in the Python-Markdown Library, enable PHP Markdown Extra syntax.  
 Also, Den-Den Markdown adopts GFM style line break. This can be enabled by [markdown.extensions.nl2br](https://pythonhosted.org/Markdown/extensions/nl2br.html), which is also included with the Python-Markdown.
