@@ -31,7 +31,7 @@ Denden_extension enables the following syntax of Den-Den Markdown in Python-Mark
 
 - Japanese Ruby Annotation
 - Tate-Chu-Yoko
-- Footnotes with epub:type attribute (requires markdown.extensions.extra or markdown.extensions.footnotes)
+- Footnotes with epub:type attribute (also requires markdown.extensions.extra or markdown.extensions.footnotes)
 - EPUB pagebreak syntax
 - Chunk file syntax
 
