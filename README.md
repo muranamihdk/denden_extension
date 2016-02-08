@@ -27,17 +27,19 @@ or
 
 ## Features
 
+Denden_extension enables the following Den-Den Markdown syntax in Python-Markdown.
+
 - Japanese Ruby Annotation
 - Tate-Chu-Yoko
 - Footnotes with epub:type attribute (requires markdown.extensions.extra or markdown.extensions.footnotes)
 - EPUB pagebreak syntax
 - Chunk file syntax
 
-The following is implemented by markdown.extensions.nl2br which is included in Python-Markdown.
+The following is enabled by markdown.extensions.nl2br which is included in Python-Markdown.
 
 - GFM style line break
 
-The following is not implemented.
+The following is not implemented in denden_extension.
 
 - Twitter account autolink syntax
 
