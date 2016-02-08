@@ -9,38 +9,41 @@ Python-Markdown 2.6 or later.
 
 
 ## Install
-
-    pip install denden_extension
+```
+pip install denden_extension
+```
 
 
 ## Usage
-
-    >>> import markdown
-    >>> from denden_extension import DenDenExtension
-    >>> markdown_text = '{電子出版|でんししゅっぱん}を手軽に'
-    >>> html_text = markdown.markdown(markdown_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
-    >>> html_text
-    '<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>'
-
+```
+>>> import markdown
+>>> from denden_extension import DenDenExtension
+>>> markdown_text = '{電子出版|でんししゅっぱん}を手軽に'
+>>> html_text = markdown.markdown(markdown_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+>>> html_text
+'<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>'
+```
 or
-
-    $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension markdown_text.md > html_text.html
-
+```
+python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension markdown_text.md > html_text.html
+```
 
 ## Description
 
+Den-Den Markdown is an extended Markdown syntax fitted for Japanese and EPUB publishing.  
 Denden_extension enables the following syntax of Den-Den Markdown in Python-Markdown.
 
-- Japanese Ruby Annotation
-- Tate-Chu-Yoko
-- Footnotes with epub:type attribute*
-- EPUB pagebreak syntax
-- Chunk file syntax
+- [Japanese Ruby Annotation](http://conv.denshochan.com/markdown#ruby)
+- [Tate-Chu-Yoko](http://conv.denshochan.com/markdown#tcy)
+- [Footnotes with epub:type attribute](http://conv.denshochan.com/markdown#footnotes)*1
+- [EPUB pagebreak syntax](http://conv.denshochan.com/markdown#pagebreak)
+- [Chunk file syntax](http://conv.denshochan.com/markdown#docbreak)*2
 
-(* This feature depends on the Python-Markdown's footnotes extension. So you also need the markdown.extensions.footnotes or markdown.extensions.extra which includes the footnotes extension to enable the feature.)
+*1 Denden_extension depends on the Python-Markdown's footnotes extension for implementing this feature. So you also need the [markdown.extensions.footnotes](https://pythonhosted.org/Markdown/extensions/footnotes.html) or [markdown.extensions.extra](https://pythonhosted.org/Markdown/extensions/extra.html) which includes the footnotes extension.  
+*2 Three or more equal signs on a line by themselves is replaced by a horizontal rule tag with docbreak class attribute(<hr class="docbreak" />).
 
-Den-Den Markdown adopts GFM style line break. This can be enabled by markdown.extensions.nl2br, which is included with the Python-Markdown.  
-Den-Den Markdown also adopts syntax of PHP Markdown Extra. This can be enabled by markdown.extensions.extra and markdown.extensions.sane_lists, which are also included in the Python-Markdown Library.
+Den-Den Markdown inherits its syntax from [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/). In Python-Markdown, [markdown.extensions.extra](https://pythonhosted.org/Markdown/extensions/extra.html) and [markdown.extensions.sane_lists](https://pythonhosted.org/Markdown/extensions/sane_lists.html), which are included in the Python-Markdown Library, enable PHP Markdown Extra syntax.  
+Also, Den-Den Markdown adopts GFM style line break. This can be enabled by [markdown.extensions.nl2br](https://pythonhosted.org/Markdown/extensions/nl2br.html), which is also included with the Python-Markdown.
 
 The following syntax of Den-Den Markdown is not implemented in denden_extension.
 
