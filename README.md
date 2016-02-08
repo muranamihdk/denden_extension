@@ -2,6 +2,7 @@
 
 Denden_extension is a [Python-Markdown](https://github.com/waylan/Python-Markdown) extension enables [Den-Den Markdown](https://github.com/denshoch/DenDenMarkdown) syntax in Python-Markdown.
 
+
 ## Requirement
 
 Python-Markdown 2.6 or later.
@@ -25,6 +26,7 @@ or
 
     $ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension markdown_text.md > html_text.html
 
+
 ## Features
 
 Denden_extension enables the following syntax of Den-Den Markdown in Python-Markdown.
@@ -43,6 +45,7 @@ The following syntax of Den-Den Markdown is not implemented in denden_extension.
 
 - Twitter account autolink syntax
 
+About the details of Den-Den Markdown syntax, see http://conv.denshochan.com/markdown (Japanese).
 
 ## Change log
 
