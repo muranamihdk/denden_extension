@@ -39,7 +39,8 @@ Denden_extension enables the following syntax of Den-Den Markdown in Python-Mark
 
 (* This feature depends on the Python-Markdown's footnotes extension. So you also need the markdown.extensions.footnotes or markdown.extensions.extra which includes the footnotes extension to enable the feature.)
 
-Den-Den Markdown adopts GFM style line break. This can be enabled by markdown.extensions.nl2br, which is included with the Python-Markdown.
+Den-Den Markdown adopts GFM style line break. This can be enabled by markdown.extensions.nl2br, which is included with the Python-Markdown.  
+Den-Den Markdown also adopts syntax of PHP Markdown Extra. This can be enabled by markdown.extensions.extra and markdown.extensions.sane_lists, which are also included in the Python-Markdown Library.
 
 The following syntax of Den-Den Markdown is not implemented in denden_extension.
 
