@@ -31,7 +31,7 @@ python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x 
 ## Description
 
 Den-Den Markdown is an extended Markdown syntax fitted for Japanese and EPUB publishing.  
-Denden_extension enables the following syntax of Den-Den Markdown in Python-Markdown.
+Denden_extension enables the following Den-Den Markdown syntax in Python-Markdown.
 
 - [Japanese Ruby Annotation](http://conv.denshochan.com/markdown#ruby)
 - [Tate-Chu-Yoko](http://conv.denshochan.com/markdown#tcy)
