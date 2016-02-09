@@ -51,17 +51,17 @@ class TestSequenceFunctions(unittest.TestCase):
 
         self.assertEqual(html_text, html_text_gened)
 
-
+    """
     def test_Abbr(self):
 
         self.assert_equal_with_files('abbr')
 
-
+    """#<!-- ここからテスト対象
     def test_Paragraph(self):
 
         self.assert_equal_with_files('paragraph')
 
-
+    """#--ここまでテスト対象>
     def test_BrInParagraph(self):
 
         self.assert_equal_with_files('br-in-paragraph')
@@ -211,14 +211,13 @@ class TestSequenceFunctions(unittest.TestCase):
 
         self.assert_equal_with_files('reference-link-no-id')
 
-    """
-    def test_Autolink(self):
 
-        $expected = fixture('autolink.html')
-        $source = fixture('autolink.md')
-        $actual = parser->transform($source);
-        assertSame(html_entity_decode($expected), html_entity_decode($actual));
-    """
+    #def test_Autolink(self):
+
+    #    $expected = fixture('autolink.html')
+    #    $source = fixture('autolink.md')
+    #    $actual = parser->transform($source);
+    #    assertSame(html_entity_decode($expected), html_entity_decode($actual));
 
 
     def test_AutolinkTwitter(self):
@@ -250,35 +249,35 @@ class TestSequenceFunctions(unittest.TestCase):
 
         self.assert_equal_with_files('mono-ruby')
 
-    """
-    def test_BraceFollowingVerticalLineNotTransformedToRuby(self):
 
-        $source = 'これは段落です。foo{|bar| bar.buz} これは段落です。'
-        $transformed = parser->transform($source);
-        assertNotRegExp('/<ruby>/', $transformed);
+    #def test_BraceFollowingVerticalLineNotTransformedToRuby(self):
 
-
-    def test_EscapeRuby(self):
-
-        $source = 'これは段落です。\{Info\|Warning\} これは段落です。'
-        $transformed = parser->transform($source);
-        assertNotRegExp('/<ruby>/', $transformed);
+    #    $source = 'これは段落です。foo{|bar| bar.buz} これは段落です。'
+    #    $transformed = parser->transform($source);
+    #    assertNotRegExp('/<ruby>/', $transformed);
 
 
-    def test_EscapeRubyVerticalLine(self):
+    #def test_EscapeRuby(self):
 
-        $source = 'これは段落です。{Info\|Warning} これは段落です。
-'
-        $transformed = parser->transform($source);
-        assertNotRegExp('/<ruby>/', $transformed);
+    #    $source = 'これは段落です。\{Info\|Warning\} これは段落です。'
+    #    $transformed = parser->transform($source);
+    #    assertNotRegExp('/<ruby>/', $transformed);
 
 
-    def test_EscapeRubyBackQuotes(self):
+    #def test_EscapeRubyVerticalLine(self):
 
-        $source = 'これは段落です。`{Info|Warning}` これは段落です。'
-        $transformed = parser->transform($source);
-        assertNotRegExp('/<ruby>/', $transformed);
-    """
+    #    $source = 'これは段落です。{Info\|Warning} これは段落です。
+#'
+    #    $transformed = parser->transform($source);
+    #    assertNotRegExp('/<ruby>/', $transformed);
+
+
+    #def test_EscapeRubyBackQuotes(self):
+
+    #    $source = 'これは段落です。`{Info|Warning}` これは段落です。'
+    #    $transformed = parser->transform($source);
+    #    assertNotRegExp('/<ruby>/', $transformed);
+
 
     def test_TateChuYoko(self):
 
@@ -294,11 +293,11 @@ class TestSequenceFunctions(unittest.TestCase):
 
         self.assert_equal_with_files('multi-paragraphs-in-footnote')
 
-    """
-    def test_MultiParagraphsInFootnoteLineBreakAtFirst(self):
 
-        assertTransformedFile('multi-paragraphs-in-footnote.html', 'multi-paragraphs-in-footnote-line-break-at-first.md')
-    """
+    #def test_MultiParagraphsInFootnoteLineBreakAtFirst(self):
+
+    #    assertTransformedFile('multi-paragraphs-in-footnote.html', 'multi-paragraphs-in-footnote-line-break-at-first.md')
+
 
     def test_FootnoteCannotReferenceAnotherPage(self):
 
@@ -928,7 +927,7 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_WithMultiAttributesFencedCodeBlock(self):
 
         self.assert_equal_with_files('with-multi-attributes-fenced-code-block')
-
+    """
 
 
 if __name__ == '__main__':

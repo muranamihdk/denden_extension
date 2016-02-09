@@ -1,11 +1,18 @@
 ○：成功
-●：失敗
+●：Python-Markdownの仕様に由来する失敗
+■：denden_extensionのバグに由来する失敗
 ▲：失敗の内容は確認したが後回し
-■：エラー
+☆：対応終了、OK
+★：エラー
 #：テストをまだPythonに移植できていないのでコメントアウトしてある
 
-test_Abbr
-test_Paragraph
+☆●test_Abbr
+　・ブロックとブロックの間に空行が入る・入らない（Python-Markdownは後者）
+　・略語の原語が指定されていないときにabbrタグのtitle属性が表示されない<abbr>・空文字で表示される<abbr title="">（Python-Markdownは後者）
+　＝＞ abbr.htmlを修正して対応
+☆●test_Paragraph
+　・ブロックとブロックの間に空行が入る・入らない（Python-Markdownは後者）
+　＝＞ paragraph.htmlを修正して対応
 test_BrInParagraph
 test_Indent
 test_HeadingsAtx
