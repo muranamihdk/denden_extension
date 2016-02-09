@@ -30,6 +30,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
             with open(htmlfile, 'r', encoding='utf-8') as f:
                 html_text = f.read().strip()
         html_text_gened = markdown.markdown(md_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+        #html_text_gened = markdown.markdown(md_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
 
         self.assertEqual(html_text, html_text_gened)
 
@@ -50,12 +51,14 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
     def assert_equal(self, source, expected):
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+        #actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
 
         self.assertEqual(expected, actual)
 
 
     def assert_true(self, source, expected):
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+        #actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
 
         self.assertTrue(re.match(expected, actual))
 
@@ -66,12 +69,14 @@ class DenDenExtensionTestCases(unittest.TestCase):
     ###  ----------------------------------------------
     
 
+    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植したもの（モジュールとして実行）
     def test_denden_basic(self):
         mdfile = './tests/denden_basic_test.txt'
         htmlfile = './tests/denden_basic_test.html'
         self.assert_equal_with_files(mdfile, htmlfile)
 
 
+    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植したもの（コマンドラインから実行）
     def test_denden_basic_cmd(self):
         mdfile = './tests/denden_basic_test.txt'
         htmlfile = './tests/denden_basic_test.html'
