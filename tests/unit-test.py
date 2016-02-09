@@ -67,38 +67,38 @@ class DenDenExtensionTestCases(unittest.TestCase):
     
 
     def test_denden_basic(self):
-        mdfile = './test/denden_basic_test.txt'
-        htmlfile = './test/denden_basic_test.html'
+        mdfile = './tests/denden_basic_test.txt'
+        htmlfile = './tests/denden_basic_test.html'
         self.assert_equal_with_files(mdfile, htmlfile)
 
 
     def test_denden_basic_cmd(self):
-        mdfile = './test/denden_basic_test.txt'
-        htmlfile = './test/denden_basic_test.html'
+        mdfile = './tests/denden_basic_test.txt'
+        htmlfile = './tests/denden_basic_test.html'
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
         
         
     def test_denden_border(self):
-        mdfile = './test/denden_border_test.txt'
-        htmlfile = './test/denden_border_test.html'
+        mdfile = './tests/denden_border_test.txt'
+        htmlfile = './tests/denden_border_test.html'
         self.assert_equal_with_files(mdfile, htmlfile)
 
 
     def test_denden_border_cmd(self):
-        mdfile = './test/denden_border_test.txt'
-        htmlfile = './test/denden_border_test.html'
+        mdfile = './tests/denden_border_test.txt'
+        htmlfile = './tests/denden_border_test.html'
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
     def test_kurofunezengo(self):
-        mdfile = './test/kurofunezengo_test.txt'
-        htmlfile = './test/kurofunezengo_test.html'
+        mdfile = './tests/kurofunezengo_test.txt'
+        htmlfile = './tests/kurofunezengo_test.html'
         self.assert_equal_with_files(mdfile, htmlfile)
 
 
     def test_kurofunezengo_cmd(self):
-        mdfile = './test/kurofunezengo_test.txt'
-        htmlfile = './test/kurofunezengo_test.html'
+        mdfile = './tests/kurofunezengo_test.txt'
+        htmlfile = './tests/kurofunezengo_test.html'
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
