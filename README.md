@@ -45,6 +45,8 @@ Denden_extension enables the following Den-Den Markdown syntax in Python-Markdow
 Den-Den Markdown inherits its syntax from [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/). In Python-Markdown, [markdown.extensions.extra](https://pythonhosted.org/Markdown/extensions/extra.html) and [markdown.extensions.sane_lists](https://pythonhosted.org/Markdown/extensions/sane_lists.html), which are included in the Python-Markdown Library, enable PHP Markdown Extra syntax.  
 Also, Den-Den Markdown adopts GFM style line break. This can be enabled by [markdown.extensions.nl2br](https://pythonhosted.org/Markdown/extensions/nl2br.html), which is also included with the Python-Markdown.
 
+If you only want to use Den-Den Markdown's original syntax, you just need to designate only markdown.extensions.footnotes and denden_extension.
+
 The following syntax of Den-Den Markdown is not implemented in denden_extension.
 
 - Twitter account autolink syntax
