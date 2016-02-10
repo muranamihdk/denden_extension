@@ -125,6 +125,11 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
+
+    #オプション指定のテスト1：docbreak：書式1（モジュール＋クラス）
     def test_omit_doc_break_1(self):
         source = u"""==="""
         expected = u"""<p>===</p>"""
@@ -132,6 +137,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト1：docbreak：書式2（モジュール＋文字列1）
     def test_omit_doc_break_2(self):
         source = u"""==="""
         expected = u"""<p>===</p>"""
@@ -139,38 +145,39 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト1：docbreak：書式3（モジュール＋文字列2）
     def test_omit_doc_break_3(self):
         source = u"""==="""
         expected = u"""<p>===</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'docbreak': False}})
-
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト2：pagenum：書式1（モジュール＋クラス）
     def test_omit_page_num_1(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ[%24]される段落です。</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(pagenum=False)])
-
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト2：pagenum：書式2（モジュール＋文字列1）
     def test_omit_page_num_2(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ[%24]される段落です。</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'pagenum': False}})
-
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト2：pagenum：書式3（モジュール＋文字列2）
     def test_omit_page_num_3(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ[%24]される段落です。</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'pagenum': False}})
-
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト3：footnote：書式1（モジュール＋クラス）
     def test_omit_footnote_sub_1(self):
         source = u"""これは脚注付き[^1]の段落です。
 [^1]: そして、これが脚注です。"""
@@ -184,10 +191,10 @@ class DenDenExtensionTestCases(unittest.TestCase):
 </ol>
 </div>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(footnote=False)])
-
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト3：footnote：書式2（モジュール＋文字列1）
     def test_omit_footnote_sub_2(self):
         source = u"""これは脚注付き[^1]の段落です。
 [^1]: そして、これが脚注です。"""
@@ -201,10 +208,10 @@ class DenDenExtensionTestCases(unittest.TestCase):
 </ol>
 </div>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'footnote': False}})
-
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト3：footnote：書式3（モジュール＋文字列2）
     def test_omit_footnote_sub_3(self):
         source = u"""これは脚注付き[^1]の段落です。
 [^1]: そして、これが脚注です。"""
@@ -218,8 +225,11 @@ class DenDenExtensionTestCases(unittest.TestCase):
 </ol>
 </div>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'footnote': False}})
-
         self.assertEqual(expected, actual)
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
     def test_paragraph(self):
