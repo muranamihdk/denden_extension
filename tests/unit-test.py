@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-import unittest
-import markdown
-from denden_extension import DenDenExtension
 import sys
 import re
 import subprocess
+import unittest
+import markdown
+from denden_extension import DenDenExtension
 
 
 class DenDenExtensionTestCases(unittest.TestCase):
@@ -69,38 +69,42 @@ class DenDenExtensionTestCases(unittest.TestCase):
     ###  ----------------------------------------------
     
 
-    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植したもの（モジュールとして実行）
+    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（モジュールとして実行）
     def test_denden_basic(self):
         mdfile = './tests/denden_basic_test.txt'
         htmlfile = './tests/denden_basic_test.html'
         self.assert_equal_with_files(mdfile, htmlfile)
 
 
-    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植したもの（コマンドラインから実行）
+    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（コマンドラインから実行）
     def test_denden_basic_cmd(self):
         mdfile = './tests/denden_basic_test.txt'
         htmlfile = './tests/denden_basic_test.html'
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
-        
-        
+
+
+    #思いつく極端な事例（境界例）（モジュールとして実行）
     def test_denden_border(self):
         mdfile = './tests/denden_border_test.txt'
         htmlfile = './tests/denden_border_test.html'
         self.assert_equal_with_files(mdfile, htmlfile)
 
 
+    #思いつく極端な事例（境界例）（コマンドラインから実行）
     def test_denden_border_cmd(self):
         mdfile = './tests/denden_border_test.txt'
         htmlfile = './tests/denden_border_test.html'
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
+    #でんでんコンバーターのDownloadsのページにある変換用サンプル「黒船前後」（モジュールとして実行）
     def test_kurofunezengo(self):
         mdfile = './tests/kurofunezengo_test.txt'
         htmlfile = './tests/kurofunezengo_test.html'
         self.assert_equal_with_files(mdfile, htmlfile)
 
 
+    #でんでんコンバーターのDownloadsのページにある変換用サンプル「黒船前後」（コマンドラインから実行）
     def test_kurofunezengo_cmd(self):
         mdfile = './tests/kurofunezengo_test.txt'
         htmlfile = './tests/kurofunezengo_test.html'
