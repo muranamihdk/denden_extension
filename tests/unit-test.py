@@ -119,12 +119,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
-    def test_import_extension_by_name_2(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        self.assert_equal(source, expected)
-
-
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
@@ -226,6 +220,266 @@ class DenDenExtensionTestCases(unittest.TestCase):
 </div>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'], extension_configs={'denden_extension:DenDenExtension': {'footnote': False}})
         self.assertEqual(expected, actual)
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
+
+    def test_omit_extra_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_nl2br_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.sane_lists', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_sane_lists_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_extra_nl2br_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.sane_lists', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_extra_sane_lists_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.nl2br', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_nl2br_sane_lists_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_all_other_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
+
+    def test_ruby_grouped(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_ruby_mono(self):
+        source = u"""{電子出版|でん|し|しゅっ|ぱん}を手軽に"""
+        expected = u"""<p><ruby>電<rt>でん</rt>子<rt>し</rt>出<rt>しゅっ</rt>版<rt>ぱん</rt></ruby>を手軽に</p>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_ruby_not_1(self):
+        source = u"""これは段落です。foo{|bar| bar.buz} これは段落です。"""
+        expected = u"""<p>これは段落です。foo{|bar| bar.buz} これは段落です。</p>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_ruby_not_2(self):
+        source = u"""これは段落です。\{Info\|Warning\} これは段落です。"""
+        expected = u"""<p>これは段落です。&#123;Info&#124;Warning&#125; これは段落です。</p>"""
+        py_markdown = u"""<p>これは段落です。{Info|Warning} これは段落です。</p>"""
+
+        self.assert_equal(source, py_markdown)
+
+
+    def test_ruby_not_3(self):
+        source = u"""これは段落です。{Info\|Warning} これは段落です。"""
+        expected = u"""<p>これは段落です。{Info&#124;Warning} これは段落です。</p>"""
+        py_markdown = u"""<p>これは段落です。{Info|Warning} これは段落です。</p>"""
+
+        self.assert_equal(source, py_markdown)
+
+
+    def test_ruby_not_4(self):
+        source = u"""これは段落です。`{Info|Warning}` これは段落です。"""
+        expected = u"""<p>これは段落です。<code>{Info|Warning}</code> これは段落です。</p>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_tate_chu_yoko(self):
+        source = u"""昭和^53^年"""
+        expected = u"""<p>昭和<span class="tcy">53</span>年</p>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_footenote_1(self):
+        source = u"""これは脚注付き[^1]の段落です。
+
+[^1]: そして、これが脚注です。"""
+        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>そして、これが脚注です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+
+</ol>
+</div>"""
+        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>そして、これが脚注です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+</ol>
+</div>"""
+
+        self.assert_equal(source, py_markdown)
+
+
+    def test_footenote_2(self):
+        source = u"""これは脚注付き[^1]の段落です。
+
+[^1]: これは脚注の中の段落です。
+
+    これは同じ脚注の中の別の段落です。"""
+        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+
+</ol>
+</div>"""
+        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+</ol>
+</div>"""
+
+        self.assert_equal(source, py_markdown)
+
+
+    def test_footenote_3(self):
+        source = u"""これは脚注付き[^1]の段落です。
+
+[^1]: 
+    これは脚注の中の段落です。
+
+    これは同じ脚注の中の別の段落です。"""
+        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+
+</ol>
+</div>
+
+"""
+        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+</ol>
+</div>"""
+
+        self.assert_equal(source, py_markdown)
+
+
+    def test_doc_break(self):
+        source = u"""これは通常の段落です。
+
+=======================================
+
+## 大見出し ##"""
+        expected = u"""<p>これは通常の段落です。</p>
+<hr class="docbreak" />
+<h2>大見出し</h2>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_page_number_1(self):
+        source = u"""[%5]
+
+## 大見出し ##"""
+        expected = u"""<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
+<h2>大見出し</h2>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_page_number_2(self):
+        source = u"""これは途中で改ページ[%24]される段落です。"""
+        expected = u"""<p>これは途中で改ページ<span id="pagenum_24" class="pagenum" title="24" epub:type="pagebreak"></span>される段落です。</p>"""
+
+        self.assert_equal(source, expected)
+
+
+    def test_page_number_3(self):
+        source = u"""[%%36]
+
+## 大見出し ##"""
+        expected = u"""<div id="pagenum_36" class="pagenum" title="36" epub:type="pagebreak">36</div>
+<h2>大見出し</h2>"""
+
+        self.assert_equal(source, expected)
 
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
@@ -531,46 +785,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
-    def test_doc_break(self):
-        source = u"""これは通常の段落です。
-
-=======================================
-
-## 大見出し ##"""
-        expected = u"""<p>これは通常の段落です。</p>
-<hr class="docbreak" />
-<h2>大見出し</h2>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_page_number_1(self):
-        source = u"""[%5]
-
-## 大見出し ##"""
-        expected = u"""<div id="pagenum_5" class="pagenum" title="5" epub:type="pagebreak"></div>
-<h2>大見出し</h2>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_page_number_2(self):
-        source = u"""これは途中で改ページ[%24]される段落です。"""
-        expected = u"""<p>これは途中で改ページ<span id="pagenum_24" class="pagenum" title="24" epub:type="pagebreak"></span>される段落です。</p>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_page_number_3(self):
-        source = u"""[%%36]
-
-## 大見出し ##"""
-        expected = u"""<div id="pagenum_36" class="pagenum" title="36" epub:type="pagebreak">36</div>
-<h2>大見出し</h2>"""
-
-        self.assert_equal(source, expected)
-
-
     def test_hyperlink_direct_1(self):
         source = u"""詳しくは[こちら](http://example.com/)をごらんください。"""
         expected = u"""<p>詳しくは<a href="http://example.com/">こちら</a>をごらんください。</p>"""
@@ -650,169 +864,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
         expected = u"""<p>Please open the folder "secret_magic_box".</p>"""
 
         self.assert_equal(source, expected)
-
-
-    def test_ruby_grouped(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_ruby_mono(self):
-        source = u"""{電子出版|でん|し|しゅっ|ぱん}を手軽に"""
-        expected = u"""<p><ruby>電<rt>でん</rt>子<rt>し</rt>出<rt>しゅっ</rt>版<rt>ぱん</rt></ruby>を手軽に</p>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_ruby_not_1(self):
-        source = u"""これは段落です。foo{|bar| bar.buz} これは段落です。"""
-        expected = u"""<p>これは段落です。foo{|bar| bar.buz} これは段落です。</p>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_ruby_not_2(self):
-        source = u"""これは段落です。\{Info\|Warning\} これは段落です。"""
-        expected = u"""<p>これは段落です。&#123;Info&#124;Warning&#125; これは段落です。</p>"""
-        py_markdown = u"""<p>これは段落です。{Info|Warning} これは段落です。</p>"""
-
-        self.assert_equal(source, py_markdown)
-
-
-    def test_ruby_not_3(self):
-        source = u"""これは段落です。{Info\|Warning} これは段落です。"""
-        expected = u"""<p>これは段落です。{Info&#124;Warning} これは段落です。</p>"""
-        py_markdown = u"""<p>これは段落です。{Info|Warning} これは段落です。</p>"""
-
-        self.assert_equal(source, py_markdown)
-
-
-    def test_ruby_not_4(self):
-        source = u"""これは段落です。`{Info|Warning}` これは段落です。"""
-        expected = u"""<p>これは段落です。<code>{Info|Warning}</code> これは段落です。</p>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_tate_chu_yoko(self):
-        source = u"""昭和^53^年"""
-        expected = u"""<p>昭和<span class="tcy">53</span>年</p>"""
-
-        self.assert_equal(source, expected)
-
-
-    def test_footenote_1(self):
-        source = u"""これは脚注付き[^1]の段落です。
-
-[^1]: そして、これが脚注です。"""
-        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
-
-<div class="footnotes" epub:type="footnotes">
-<hr />
-<ol>
-
-<li>
-<div id="fn_1" class="footnote" epub:type="footnote">
-<p>そして、これが脚注です。&#160;<a href="#fnref_1">&#9166;</a></p>
-</div>
-</li>
-
-</ol>
-</div>"""
-        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
-<div class="footnotes" epub:type="footnotes">
-<hr />
-<ol>
-<li>
-<div id="fn_1" class="footnote" epub:type="footnote">
-<p>そして、これが脚注です。&#160;<a href="#fnref_1">&#9166;</a></p>
-</div>
-</li>
-</ol>
-</div>"""
-
-        self.assert_equal(source, py_markdown)
-
-
-    def test_footenote_2(self):
-        source = u"""これは脚注付き[^1]の段落です。
-
-[^1]: これは脚注の中の段落です。
-
-    これは同じ脚注の中の別の段落です。"""
-        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
-
-<div class="footnotes" epub:type="footnotes">
-<hr />
-<ol>
-
-<li>
-<div id="fn_1" class="footnote" epub:type="footnote">
-<p>これは脚注の中の段落です。</p>
-
-<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
-</div>
-</li>
-
-</ol>
-</div>"""
-        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
-<div class="footnotes" epub:type="footnotes">
-<hr />
-<ol>
-<li>
-<div id="fn_1" class="footnote" epub:type="footnote">
-<p>これは脚注の中の段落です。</p>
-<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
-</div>
-</li>
-</ol>
-</div>"""
-
-        self.assert_equal(source, py_markdown)
-
-
-    def test_footenote_3(self):
-        source = u"""これは脚注付き[^1]の段落です。
-
-[^1]: 
-    これは脚注の中の段落です。
-
-    これは同じ脚注の中の別の段落です。"""
-        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
-
-<div class="footnotes" epub:type="footnotes">
-<hr />
-<ol>
-
-<li>
-<div id="fn_1" class="footnote" epub:type="footnote">
-<p>これは脚注の中の段落です。</p>
-
-<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
-</div>
-</li>
-
-</ol>
-</div>
-
-"""
-        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
-<div class="footnotes" epub:type="footnotes">
-<hr />
-<ol>
-<li>
-<div id="fn_1" class="footnote" epub:type="footnote">
-<p>これは脚注の中の段落です。</p>
-<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
-</div>
-</li>
-</ol>
-</div>"""
-
-        self.assert_equal(source, py_markdown)
 
 
     def test_img_direct_1(self):
