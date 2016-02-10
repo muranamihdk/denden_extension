@@ -31,7 +31,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
                 html_text = f.read().strip()
         html_text_gened = markdown.markdown(md_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
         #html_text_gened = markdown.markdown(md_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
-
         self.assertEqual(html_text, html_text_gened)
 
 
@@ -45,21 +44,18 @@ class DenDenExtensionTestCases(unittest.TestCase):
         html_text_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', mdfile], universal_newlines=True).strip()
         if sys.version[0] == '2':
             html_text_gened = html_text_gened.decode('utf-8')
-
         self.assertEqual(html_text, html_text_gened)
 
 
     def assert_equal(self, source, expected):
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
         #actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
-
         self.assertEqual(expected, actual)
 
 
     def assert_true(self, source, expected):
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
         #actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
-
         self.assertTrue(re.match(expected, actual))
 
 
@@ -111,17 +107,21 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
+
+    #モジュールとして実行する際にクラスではなく文字列でエクステンションを指定できるか
     def test_import_extension_by_name_1(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-
-        self.assert_equal(source, expected)
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
+        self.assertEqual(expected, actual)
 
 
     def test_import_extension_by_name_2(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-
         self.assert_equal(source, expected)
 
 
@@ -129,7 +129,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
         source = u"""==="""
         expected = u"""<p>===</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(docbreak=False)])
-
         self.assertEqual(expected, actual)
 
 
@@ -137,7 +136,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
         source = u"""==="""
         expected = u"""<p>===</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'], extension_configs={'denden_extension': {'docbreak': False}})
-
         self.assertEqual(expected, actual)
 
 
