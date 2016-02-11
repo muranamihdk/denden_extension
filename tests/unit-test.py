@@ -66,6 +66,44 @@ class DenDenExtensionTestCases(unittest.TestCase):
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
+    #Python-Markdownの4つの実行方法で正常に動くことのテスト
+    
+    #markdown.markdown: モジュールとして
+    
+    #markdown.markdown: コマンドラインから
+    
+    #markdown.markdownFromFile: モジュールとして: 「黒船前後」
+    def test_denden_basic_markdownFromFile(self):
+        markdown.markdownFromFile(
+            input='./tests/kurofunezengo_test.txt',
+            output='./tests/output_temp.html',
+            encoding='utf-8',
+            extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+        htmlfile = './tests/kurofunezengo_test.html'
+        if sys.version[0] == '2':
+            with open(htmlfile, 'r') as f:
+                html_text = f.read().decode('utf-8').strip()
+        elif sys.version[0] == '3':
+            with open(htmlfile, 'r', encoding='utf-8') as f:
+                html_text = f.read().strip()
+        outputfile = './tests/output_temp.html'
+        if sys.version[0] == '2':
+            with open(outputfile, 'r') as f:
+                html_text_gened = f.read().decode('utf-8').strip()
+        elif sys.version[0] == '3':
+            with open(outputfile, 'r', encoding='utf-8') as f:
+                html_text_gened = f.read().strip()
+        if sys.version[0] == '2':
+            html_text_gened = html_text_gened.decode('utf-8')
+        self.assertEqual(html_text, html_text_gened)
+
+
+    #markdown.Markdown: 
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
 
     #素のPython-Markdownでもでんでんコンバーターと挙動が違うことの確認（denden_extensionのせいではない）
     
