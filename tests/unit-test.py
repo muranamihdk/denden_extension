@@ -7,6 +7,7 @@ import markdown
 from denden_extension import DenDenExtension
 
 
+
 class DenDenExtensionTestCases(unittest.TestCase):
 
     def setUp(self):
@@ -30,7 +31,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
             with open(htmlfile, 'r', encoding='utf-8') as f:
                 html_text = f.read().strip()
         html_text_gened = markdown.markdown(md_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
-        #html_text_gened = markdown.markdown(md_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
         self.assertEqual(html_text, html_text_gened)
 
 
@@ -49,13 +49,11 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
     def assert_equal(self, source, expected):
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
-        #actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
         self.assertEqual(expected, actual)
 
 
     def assert_true(self, source, expected):
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
-        #actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
         self.assertTrue(re.match(expected, actual))
 
 
@@ -65,63 +63,116 @@ class DenDenExtensionTestCases(unittest.TestCase):
     ###  ----------------------------------------------
     
 
-    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（モジュールとして実行）
-    def test_denden_basic(self):
-        mdfile = './tests/denden_basic_test.txt'
-        htmlfile = './tests/denden_basic_test.html'
-        self.assert_equal_with_files(mdfile, htmlfile)
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
-    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（コマンドラインから実行）
-    def test_denden_basic_cmd(self):
-        mdfile = './tests/denden_basic_test.txt'
-        htmlfile = './tests/denden_basic_test.html'
-        self.assert_equal_with_files_cmd(mdfile, htmlfile)
+    #素のPython-Markdownでもでんでんコンバーターと挙動が違うことの確認（denden_extensionのせいではない）
+    
+    #ブロックの間の空行が消える
+    def test_paragraph_with_plain_python_markdown(self):
+        source = u"""これは段落です。
 
+これは別の段落です。"""
+        denden_markdown = u"""<p>これは段落です。</p>
 
-    #思いつく極端な事例（境界例）（モジュールとして実行）
-    def test_denden_border(self):
-        mdfile = './tests/denden_border_test.txt'
-        htmlfile = './tests/denden_border_test.html'
-        self.assert_equal_with_files(mdfile, htmlfile)
-
-
-    #思いつく極端な事例（境界例）（コマンドラインから実行）
-    def test_denden_border_cmd(self):
-        mdfile = './tests/denden_border_test.txt'
-        htmlfile = './tests/denden_border_test.html'
-        self.assert_equal_with_files_cmd(mdfile, htmlfile)
-
-
-    #でんでんコンバーターのDownloadsのページにある変換用サンプル「黒船前後」（モジュールとして実行）
-    def test_kurofunezengo(self):
-        mdfile = './tests/kurofunezengo_test.txt'
-        htmlfile = './tests/kurofunezengo_test.html'
-        self.assert_equal_with_files(mdfile, htmlfile)
-
-
-    #でんでんコンバーターのDownloadsのページにある変換用サンプル「黒船前後」（コマンドラインから実行）
-    def test_kurofunezengo_cmd(self):
-        mdfile = './tests/kurofunezengo_test.txt'
-        htmlfile = './tests/kurofunezengo_test.html'
-        self.assert_equal_with_files_cmd(mdfile, htmlfile)
+<p>これは別の段落です。</p>"""
+        py_markdown = u"""<p>これは段落です。</p>
+<p>これは別の段落です。</p>"""
+        actual = markdown.markdown(source)
+        self.assertEqual(py_markdown, actual)
 
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
-    #モジュールとして実行する際にクラスではなく文字列でエクステンションを指定できるか
-    def test_import_extension_by_name_1(self):
+    #モジュールとして実行する際に
+    #1. extensionクラスのインスタンスを渡す
+    #2. extensionモジュール名を文字列で渡す
+    #3. extensionクラス名を文字列で渡す
+    #以上3つのいずれの方法でもエクステンションの指定が可能であることのテスト
+
+    def test_import_extension_by_class_instance(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+        self.assertEqual(expected, actual)
+
+
+    def test_import_extension_by_module_name(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
         actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
         self.assertEqual(expected, actual)
 
 
+    def test_import_extension_by_class_name(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension:DenDenExtension'])
+        self.assertEqual(expected, actual)
+
+
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
+    #denden_extension以外のエクステンション指定がない場合でも正常に動くことのテスト
+
+    def test_omit_extra_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_nl2br_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.sane_lists', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_sane_lists_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_extra_nl2br_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.sane_lists', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_extra_sane_lists_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.nl2br', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_nl2br_sane_lists_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    def test_omit_all_other_extension_1(self):
+        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
+        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
+        actual = markdown.markdown(source, extensions=['denden_extension'])
+        self.assertEqual(expected, actual)
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
+    #オプション指定のテスト。
+    #オプションを複数渡す場合のテストと、コマンドラインから渡す場合のテストも追加すること。
 
     #オプション指定のテスト1：docbreak：書式1（モジュール＋クラス）
     def test_omit_doc_break_1(self):
@@ -226,53 +277,46 @@ class DenDenExtensionTestCases(unittest.TestCase):
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
-    def test_omit_extra_extension_1(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.nl2br', 'markdown.extensions.sane_lists', 'denden_extension'])
-        self.assertEqual(expected, actual)
+    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（モジュールとして実行）
+    def test_denden_basic(self):
+        mdfile = './tests/denden_basic_test.txt'
+        htmlfile = './tests/denden_basic_test.html'
+        self.assert_equal_with_files(mdfile, htmlfile)
 
 
-    def test_omit_nl2br_extension_1(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.sane_lists', 'denden_extension'])
-        self.assertEqual(expected, actual)
+    #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（コマンドラインから実行）
+    def test_denden_basic_cmd(self):
+        mdfile = './tests/denden_basic_test.txt'
+        htmlfile = './tests/denden_basic_test.html'
+        self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
-    def test_omit_sane_lists_extension_1(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'denden_extension'])
-        self.assertEqual(expected, actual)
+    #思いつく極端な事例（境界例）（モジュールとして実行）
+    def test_denden_border(self):
+        mdfile = './tests/denden_border_test.txt'
+        htmlfile = './tests/denden_border_test.html'
+        self.assert_equal_with_files(mdfile, htmlfile)
 
 
-    def test_omit_extra_nl2br_extension_1(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.sane_lists', 'denden_extension'])
-        self.assertEqual(expected, actual)
+    #思いつく極端な事例（境界例）（コマンドラインから実行）
+    def test_denden_border_cmd(self):
+        mdfile = './tests/denden_border_test.txt'
+        htmlfile = './tests/denden_border_test.html'
+        self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
-    def test_omit_extra_sane_lists_extension_1(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.nl2br', 'denden_extension'])
-        self.assertEqual(expected, actual)
+    #でんでんコンバーターのDownloadsのページにある変換用サンプル「黒船前後」（モジュールとして実行）
+    def test_kurofunezengo(self):
+        mdfile = './tests/kurofunezengo_test.txt'
+        htmlfile = './tests/kurofunezengo_test.html'
+        self.assert_equal_with_files(mdfile, htmlfile)
 
 
-    def test_omit_nl2br_sane_lists_extension_1(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['markdown.extensions.extra', 'denden_extension'])
-        self.assertEqual(expected, actual)
-
-
-    def test_omit_all_other_extension_1(self):
-        source = u"""{電子出版|でんししゅっぱん}を手軽に"""
-        expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
-        actual = markdown.markdown(source, extensions=['denden_extension'])
-        self.assertEqual(expected, actual)
+    #でんでんコンバーターのDownloadsのページにある変換用サンプル「黒船前後」（コマンドラインから実行）
+    def test_kurofunezengo_cmd(self):
+        mdfile = './tests/kurofunezengo_test.txt'
+        htmlfile = './tests/kurofunezengo_test.html'
+        self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
