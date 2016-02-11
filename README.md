@@ -31,7 +31,8 @@ or
 ...             input='markdown_text.md',
 ...             output='html_text.html',
 ...             encoding='utf-8',
-...             extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
+...             extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()],
+...             )
 ```
 or
 ```
