@@ -15,6 +15,7 @@ pip install denden_extension
 
 
 ## Usage
+Designate denden_extension as extension with other extensions when you use the Python-Markdown. For example:
 ```
 >>> import markdown
 >>> from denden_extension import DenDenExtension
@@ -22,6 +23,15 @@ pip install denden_extension
 >>> html_text = markdown.markdown(markdown_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 >>> html_text
 '<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>'
+```
+or
+```
+>>> from denden_extension import DenDenExtension
+>>> markdown.markdownFromFile(
+...             input='markdown_text.md',
+...             output='html_text.html',
+...             encoding='utf-8',
+...             extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension()])
 ```
 or
 ```
