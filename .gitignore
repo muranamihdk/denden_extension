@@ -55,3 +55,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Add for denden_extension
+tests/output_temp.html
