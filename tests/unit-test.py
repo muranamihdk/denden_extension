@@ -83,6 +83,20 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(py_markdown, actual)
 
 
+    #ブロックの間の空行が消える。出力フォーマットを変えても同じ
+    def test_paragraph_with_plain_python_markdown_html5(self):
+        source = u"""これは段落です。
+
+これは別の段落です。"""
+        denden_markdown = u"""<p>これは段落です。</p>
+
+<p>これは別の段落です。</p>"""
+        py_markdown = u"""<p>これは段落です。</p>
+<p>これは別の段落です。</p>"""
+        actual = markdown.markdown(source, output_format="html5")
+        self.assertEqual(py_markdown, actual)
+
+
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
