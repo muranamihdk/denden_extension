@@ -93,6 +93,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
     #3. extensionクラス名を文字列で渡す
     #以上3つのいずれの方法でもエクステンションの指定が可能であることのテスト
 
+    #1. extensionクラスのインスタンスを渡す
     def test_import_extension_by_class_instance(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
@@ -100,6 +101,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    #2. extensionモジュール名を文字列で渡す
     def test_import_extension_by_module_name(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
@@ -107,6 +109,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    #3. extensionクラス名を文字列で渡す
     def test_import_extension_by_class_name(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
         expected = u"""<p><ruby>電子出版<rt>でんししゅっぱん</rt></ruby>を手軽に</p>"""
