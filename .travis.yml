@@ -4,6 +4,6 @@ python:
   - "3.4"
   - "3.5"
 # command to install dependencies
-install: "pip install denden_extension"
+install: "pip install markdown"
 # command to run tests
 script: sh ./test.sh
