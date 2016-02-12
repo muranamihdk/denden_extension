@@ -15,7 +15,7 @@ pip install denden_extension
 
 
 ## Usage
-Designate denden_extension as extension with other extensions when you use the Python-Markdown. For example:
+Designate denden_extension as extension with other extensions when you use the Python-Markdown.
 ```
 >>> import markdown
 >>> from denden_extension import DenDenExtension
@@ -26,6 +26,7 @@ Designate denden_extension as extension with other extensions when you use the P
 ```
 or
 ```
+>>> import markdown
 >>> from denden_extension import DenDenExtension
 >>> markdown.markdownFromFile(
 ...             input='markdown_text.md',
