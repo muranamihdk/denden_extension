@@ -6,4 +6,4 @@ python:
 # command to install dependencies
 install: "pip install denden_extension"
 # command to run tests
-script: sh test.sh
+script: sh ./test.sh
