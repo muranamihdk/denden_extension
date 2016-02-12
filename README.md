@@ -39,6 +39,7 @@ or
 ```
 python -m markdown -x markdown.extensions.extra -x markdown.extensions.nl2br -x markdown.extensions.sane_lists -x denden_extension markdown_text.md > html_text.html
 ```
+For more details of usage of Python-Markdown, see [Python-Markdown documentation](https://pythonhosted.org/Markdown/).
 
 ## Description
 
@@ -64,7 +65,7 @@ The following syntax of Den-Den Markdown is not implemented in denden_extension.
 
 - Twitter account autolink syntax
 
-About the details of Den-Den Markdown syntax, see http://conv.denshochan.com/markdown (Japanese).
+For more details of Den-Den Markdown syntax, see http://conv.denshochan.com/markdown (Japanese).
 
 ## Change log
 
