@@ -429,6 +429,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
+
     def test_footenote_1(self):
         source = u"""これは脚注付き[^1]の段落です。
 
@@ -539,6 +540,123 @@ class DenDenExtensionTestCases(unittest.TestCase):
 </div>"""
 
         self.assert_equal(source, py_markdown)
+
+
+
+    def test_footenote_1_with_footnotes_ext(self):
+        source = u"""これは脚注付き[^1]の段落です。
+
+[^1]: そして、これが脚注です。"""
+        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>そして、これが脚注です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+
+</ol>
+</div>"""
+        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>そして、これが脚注です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+</ol>
+</div>"""
+
+        actual = markdown.markdown(source, extensions=['markdown.extensions.footnotes', 'markdown.extensions.nl2br', DenDenExtension()])
+        self.assertEqual(py_markdown, actual)
+
+
+    def test_footenote_2_with_only_footnotes_ext(self):
+        source = u"""これは脚注付き[^1]の段落です。
+
+[^1]: これは脚注の中の段落です。
+
+    これは同じ脚注の中の別の段落です。"""
+        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+
+</ol>
+</div>"""
+        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+</ol>
+</div>"""
+
+        actual = markdown.markdown(source, extensions=['markdown.extensions.footnotes', 'markdown.extensions.nl2br', DenDenExtension()])
+        self.assertEqual(py_markdown, actual)
+
+
+    def test_footenote_3_with_footnotes_ext(self):
+        source = u"""これは脚注付き[^1]の段落です。
+
+[^1]: 
+    これは脚注の中の段落です。
+
+    これは同じ脚注の中の別の段落です。"""
+        expected = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+
+</ol>
+</div>
+
+"""
+        py_markdown = u"""<p>これは脚注付き<a id="fnref_1" href="#fn_1" rel="footnote" class="noteref" epub:type="noteref">1</a>の段落です。</p>
+<div class="footnotes" epub:type="footnotes">
+<hr />
+<ol>
+<li>
+<div id="fn_1" class="footnote" epub:type="footnote">
+<p>これは脚注の中の段落です。</p>
+<p>これは同じ脚注の中の別の段落です。&#160;<a href="#fnref_1">&#9166;</a></p>
+</div>
+</li>
+</ol>
+</div>"""
+
+        actual = markdown.markdown(source, extensions=['markdown.extensions.footnotes', 'markdown.extensions.nl2br', DenDenExtension()])
+        self.assertEqual(py_markdown, actual)
+
 
 
     def test_doc_break(self):
