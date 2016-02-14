@@ -64,15 +64,56 @@ class DenDenExtensionTestCases(unittest.TestCase):
     
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # 素のPython-Markdownを使った場合でも、でんでんコンバーターとは出力に違いがあることの確認（denden_extensionのせいではなく、Python-Markdownの仕様であることの確認）
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
-    #Python-Markdownの4つの実行方法で正常に動くことのテスト
+
+    #でんでんマークダウン：ブロックの間には、空行が1行置かれる（ソースでは2行以上の空行でも、1行になる）
+    #Python-Markdown：ブロックの間には、空行は置かれない（仮にソースで2行以上の空行を置いていた場合でも、ブロック間の空行はなくなる）
+    def test_paragraph_with_plain_python_markdown(self):
+        source = u"""これは段落です。
+
+これは別の段落です。"""
+        denden_markdown = u"""<p>これは段落です。</p>
+
+<p>これは別の段落です。</p>"""
+        py_markdown = u"""<p>これは段落です。</p>
+<p>これは別の段落です。</p>"""
+        actual = markdown.markdown(source)
+        self.assertEqual(py_markdown, actual)
+
+
+    #上記の仕様は、出力フォーマットを変えても同じ
+    def test_paragraph_with_plain_python_markdown_html5(self):
+        source = u"""これは段落です。
+
+これは別の段落です。"""
+        denden_markdown = u"""<p>これは段落です。</p>
+
+<p>これは別の段落です。</p>"""
+        py_markdown = u"""<p>これは段落です。</p>
+<p>これは別の段落です。</p>"""
+        actual = markdown.markdown(source, output_format="html5")
+        self.assertEqual(py_markdown, actual)
+
+
+    #でんでんマークダウン：入れ子になったブロックの下位ブロックは、インデントされる
+    #Python-Markdown：
+
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # Python-Markdownの複数の実行方法のいずれでも、denden_extensionが使えることのテスト
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
     
-    #markdown.markdown: モジュールとして
-    
-    #markdown.markdown: コマンドラインから
-    
-    #markdown.markdownFromFile: モジュールとして: 「黒船前後」
+    #コマンドラインから実行
+    #=> 他のテストで検証されているので省略
+
+    #モジュールとして実行: markdown.markdownメソッドを使用 
+    #=> 他のテストで検証されているので省略
+
+    #モジュールとして実行: markdown.markdownFromFileメソッドを使用: テキストは「黒船前後」
     def test_denden_basic_markdownFromFile(self):
         markdown.markdownFromFile(
             input='./tests/kurofunezengo_test.txt',
@@ -98,52 +139,18 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(html_text, html_text_gened)
 
 
-    #markdown.Markdown: 
+    #モジュールとして実行: markdown.Markdownクラスを使用
 
-
-    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
-    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
-
-
-    #素のPython-Markdownでもでんでんコンバーターと挙動が違うことの確認（denden_extensionのせいではない）
-    
-    #ブロックの間の空行が消える
-    def test_paragraph_with_plain_python_markdown(self):
-        source = u"""これは段落です。
-
-これは別の段落です。"""
-        denden_markdown = u"""<p>これは段落です。</p>
-
-<p>これは別の段落です。</p>"""
-        py_markdown = u"""<p>これは段落です。</p>
-<p>これは別の段落です。</p>"""
-        actual = markdown.markdown(source)
-        self.assertEqual(py_markdown, actual)
-
-
-    #ブロックの間の空行が消える。出力フォーマットを変えても同じ
-    def test_paragraph_with_plain_python_markdown_html5(self):
-        source = u"""これは段落です。
-
-これは別の段落です。"""
-        denden_markdown = u"""<p>これは段落です。</p>
-
-<p>これは別の段落です。</p>"""
-        py_markdown = u"""<p>これは段落です。</p>
-<p>これは別の段落です。</p>"""
-        actual = markdown.markdown(source, output_format="html5")
-        self.assertEqual(py_markdown, actual)
 
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #モジュールとして実行する際に、
+    # 1. extensionクラスのインスタンスを渡す
+    # 2. extensionモジュール名を文字列で渡す
+    # 3. extensionクラス名を文字列で渡す
+    #以上3つのいずれの方法でもdenden_extensionの指定が可能であることのテスト
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
-
-    #モジュールとして実行する際に
-    #1. extensionクラスのインスタンスを渡す
-    #2. extensionモジュール名を文字列で渡す
-    #3. extensionクラス名を文字列で渡す
-    #以上3つのいずれの方法でもエクステンションの指定が可能であることのテスト
 
     #1. extensionクラスのインスタンスを渡す
     def test_import_extension_by_class_instance(self):
@@ -170,9 +177,9 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    #denden_extension以外のextensionを外した場合でも正常に動くことのテスト
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
-    #denden_extension以外のエクステンション指定がない場合でも正常に動くことのテスト
 
     def test_omit_extra_extension_1(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
@@ -223,11 +230,13 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # オプションが正常に機能しているかのテスト
+    #
+    #オプションを複数渡す場合のテストと、コマンドラインから渡す場合のテストも追加すること。
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
-    #オプション指定のテスト。
-    #オプションを複数渡す場合のテストと、コマンドラインから渡す場合のテストも追加すること。
 
     #オプション指定のテスト1：docbreak：書式1（モジュール＋クラス）
     def test_omit_doc_break_1(self):
@@ -328,7 +337,9 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # ファイルに記載されたある程度まとまった量のマークダウンテキストを変換するテスト
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
@@ -374,9 +385,14 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal_with_files_cmd(mdfile, htmlfile)
 
 
+
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # でんでんマークダウン固有のシンタックスの単体テスト
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
+
+    # ルビ
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
     def test_ruby_grouped(self):
         source = u"""{電子出版|でんししゅっぱん}を手軽に"""
@@ -422,6 +438,9 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
+    # 縦中横
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
     def test_tate_chu_yoko(self):
         source = u"""昭和^53^年"""
         expected = u"""<p>昭和<span class="tcy">53</span>年</p>"""
@@ -429,6 +448,8 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
+    # 脚注
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
     def test_footenote_1(self):
         source = u"""これは脚注付き[^1]の段落です。
@@ -658,6 +679,8 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(py_markdown, actual)
 
 
+    # ファイル分割
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
     def test_doc_break(self):
         source = u"""これは通常の段落です。
@@ -682,6 +705,9 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
+    # ページ番号（改ページ）
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
     def test_page_number_2(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
         expected = u"""<p>これは途中で改ページ<span id="pagenum_24" class="pagenum" title="24" epub:type="pagebreak"></span>される段落です。</p>"""
@@ -699,7 +725,9 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
+
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # でんでんマークダウン中の、オリジナルのマークダウンおよびPHP拡張マークダウンを継承したシンタックス部分のテスト
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
