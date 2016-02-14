@@ -336,6 +336,22 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    #オプション指定のテスト4：すべてオフ：（コマンドラインから）
+    def test_omit_all_denden_basic_cmd(self):
+        mdfile = './tests/denden_basic_test_for_omit_all_option_cmd.txt'
+        htmlfile = './tests/denden_basic_test_for_omit_all_option_cmd.html'
+        if sys.version[0] == '2':
+            with open(htmlfile, 'r') as f:
+                html_text = f.read().decode('utf-8').strip()
+        elif sys.version[0] == '3':
+            with open(htmlfile, 'r', encoding='utf-8') as f:
+                html_text = f.read().strip()
+        html_text_gened = subprocess.check_output(['python', '-m', 'markdown', '-x', 'markdown.extensions.extra', '-x', 'markdown.extensions.nl2br', '-x', 'markdown.extensions.sane_lists', '-x', 'denden_extension', '-c', './tests/config.json', mdfile], universal_newlines=True).strip()
+        if sys.version[0] == '2':
+            html_text_gened = html_text_gened.decode('utf-8')
+        self.assertEqual(html_text, html_text_gened)
+
+
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     # ファイルに記載されたある程度まとまった量のマークダウンテキストを変換するテスト
@@ -678,7 +694,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assertEqual(py_markdown, actual)
 
 
-    # ファイル分割
+    # 改ページ（ファイル分割）
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
     def test_doc_break(self):
@@ -704,7 +720,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
-    # ページ番号（改ページ）
+    # ページ番号
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
     def test_page_number_2(self):
