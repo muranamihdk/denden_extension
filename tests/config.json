@@ -1,5 +1,7 @@
 {"denden_extension":
-    {"pagenum": "False"},
-"denden_extension":
-    {"footnote": "False"}
+    {
+        "docbreak": "False",
+        "pagenum": "False",
+        "footnote": "False"
+    }
 }

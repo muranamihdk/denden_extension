@@ -338,7 +338,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
     #オプション指定のテスト4：すべてオフ：（コマンドラインから）
     def test_omit_all_denden_basic_cmd(self):
-        mdfile = './tests/denden_basic_test_for_omit_all_option_cmd.txt'
+        mdfile = './tests/denden_basic_test.txt'
         htmlfile = './tests/denden_basic_test_for_omit_all_option_cmd.html'
         if sys.version[0] == '2':
             with open(htmlfile, 'r') as f:
