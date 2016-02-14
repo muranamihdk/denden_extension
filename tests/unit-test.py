@@ -359,6 +359,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
 
     #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（モジュールとして実行）
+    # ただし改ページとページ番号のテストを追加してある
     def test_denden_basic(self):
         mdfile = './tests/denden_basic_test.txt'
         htmlfile = './tests/denden_basic_test.html'
@@ -366,6 +367,7 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
 
     #でんでんエディターにデフォルトで表示されている記述例をテストとして移植（コマンドラインから実行）
+    # ただし改ページとページ番号のテストを追加してある
     def test_denden_basic_cmd(self):
         mdfile = './tests/denden_basic_test.txt'
         htmlfile = './tests/denden_basic_test.html'
@@ -403,6 +405,8 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     # でんでんマークダウン固有のシンタックスの単体テスト
+    # でんでんマークダウンの記法の解説ページより移植
+    # http://conv.denshochan.com/markdown
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
@@ -743,6 +747,8 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
     # でんでんマークダウン中の、オリジナルのマークダウンおよびPHP拡張マークダウンを継承したシンタックス部分のテスト
+    # でんでんマークダウンの記法の解説ページより移植
+    # http://conv.denshochan.com/markdown
     #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
 
@@ -1319,6 +1325,81 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
         self.assert_equal(source, expected)
 
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # その他のテスト
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
+    # HTMLブロック中にネストした複雑なマークダウンでdenden_extensionが悪さをしないかのテスト
+    # コードは下記より
+    # https://pythonhosted.org/Markdown/extensions/extra.html#nested-markdown-inside-html-blocks
+    # ただしResult:は extra, nl2br, sain_lists 各extensionを使用する環境での出力に差し替えてある (<br />が何カ所かに追加される)
+    def test_nested_markdown_inside_html_blocks(self):
+        source = u"""<div markdown="1" name="Example">
+
+The text of the `Example` element.
+
+<div markdown="1" name="DefaultBlockMode">
+This text gets wrapped in `p` tags.
+</div>
+
+The tail of the `DefaultBlockMode` subelement.
+
+<p markdown="1" name="DefaultSpanMode">
+This text *is not* wrapped in additional `p` tags.
+</p>
+
+The tail of the `DefaultSpanMode` subelement.
+
+<div markdown="span" name="SpanModeOverride">
+This `div` block is not wrapped in paragraph tags.
+Note: Subelements are not required to have tail text.
+</div>
+
+<p markdown="block" name="BlockModeOverride">
+This `p` block *is* foolishly wrapped in further paragraph tags.
+</p>
+
+The tail of the `BlockModeOverride` subelement.
+
+<div name="RawHtml">
+Raw HTML blocks may also be nested.
+</div>
+
+</div>
+
+This text is after the markdown in HTML."""
+        expected = u"""<div name="Example">
+<p>The text of the <code>Example</code> element.</p>
+<div name="DefaultBlockMode">
+<p>This text gets wrapped in <code>p</code> tags.</p>
+</div>
+<p>The tail of the <code>DefaultBlockMode</code> subelement.</p>
+<p name="DefaultSpanMode"><br />
+This text <em>is not</em> wrapped in additional <code>p</code> tags.</p>
+<p>The tail of the <code>DefaultSpanMode</code> subelement.</p>
+<div name="SpanModeOverride"><br />
+This <code>div</code> block is not wrapped in paragraph tags.<br />
+Note: Subelements are not required to have tail text.</div>
+<p name="BlockModeOverride">
+<p>This <code>p</code> block <em>is</em> foolishly wrapped in further paragraph tags.</p>
+</p>
+<p>The tail of the <code>BlockModeOverride</code> subelement.</p>
+<div name="RawHtml">
+Raw HTML blocks may also be nested.
+</div>
+
+</div>
+<p>This text is after the markdown in HTML.</p>"""
+
+        self.assert_equal(source, expected)
+
+
+
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+    # テスト用テンプレート
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
     def test_(self):
         source = u""""""
