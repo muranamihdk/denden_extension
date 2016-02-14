@@ -710,6 +710,9 @@ class DenDenExtensionTestCases(unittest.TestCase):
         self.assert_equal(source, expected)
 
 
+    # ページ番号
+    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
+
     def test_page_number_1(self):
         source = u"""[%5]
 
@@ -719,9 +722,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
 
         self.assert_equal(source, expected)
 
-
-    # ページ番号
-    #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 
     def test_page_number_2(self):
         source = u"""これは途中で改ページ[%24]される段落です。"""
