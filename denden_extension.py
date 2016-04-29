@@ -108,12 +108,12 @@ The classes for DenDen Markdown syntax
 ---------------------------------------------------------------"""
 
 class TwoBytesSpacePreprocessor(Preprocessor):
-    """ Two bytes Space. """
+    """ Replace two bytes spaces with a placeholder. """
 
     def run(self, lines):
         new_lines = []
         for line in lines:
-            new_lines.append(re.sub(r'　', 'denden_TwoBytesSpace_■■■■', line))
+            new_lines.append(re.sub(r'　', 'klzzwxh:12288', line))
         return new_lines
 
 
@@ -270,11 +270,10 @@ class FootnoteSubPostprocessor(Postprocessor):
 
 
 class TwoBytesSpacePostprocessor(Postprocessor):
-    """ Two bytes Space. """
+    """ Restore two bytes spaces. """
 
     def run(self, text):
-        text = text.replace('denden_TwoBytesSpace_■■■■', '　')
-        return text
+        return text.replace('klzzwxh:12288', '　')
 
 
 
