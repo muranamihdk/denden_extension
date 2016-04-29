@@ -134,8 +134,6 @@ class DenDenExtensionTestCases(unittest.TestCase):
         elif sys.version[0] == '3':
             with open(outputfile, 'r', encoding='utf-8') as f:
                 html_text_gened = f.read().strip()
-        if sys.version[0] == '2':
-            html_text_gened = html_text_gened.decode('utf-8')
         self.assertEqual(html_text, html_text_gened)
 
 
