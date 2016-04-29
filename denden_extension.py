@@ -179,9 +179,9 @@ class PageNumTagPattern(Pattern):
     Return a 'pagenum' class element containing the matching text.
     """
     def handleMatch(self, m):
-        if not m.group(1).strip() or m.group(1).endswith('\n'): #matchした部分より前に文字列がない
+        if not m.group(1).strip() or m.group(1).endswith('\n'):  # There is no string before the matched part
             el = util.etree.Element('div')
-        else: #matchした部分より前に文字列がある
+        else:  # There is a string before the matched part
             el = util.etree.Element('span')
         el.attrib = {
             'id': 'pagenum_{}'.format(m.group(3)),
