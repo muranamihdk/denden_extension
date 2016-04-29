@@ -55,7 +55,7 @@ Disable Footnotes with epub:type attribute:
 >>> html_text = markdown.markdown(markdown_text, extensions=['markdown.extensions.extra', 'markdown.extensions.nl2br', 'markdown.extensions.sane_lists', DenDenExtension(footnote=False)])
 ```
 
-If you run the Python-Markdown from command line with a extension with options, you need to prepare the configuration file. For more details, see [Python-Markdown documentation](https://pythonhosted.org/Markdown/cli.html#using-extensions).
+If you run the Python-Markdown from command line with an extension with options, you need to prepare the configuration file. For more details, see [Python-Markdown documentation](https://pythonhosted.org/Markdown/cli.html#using-extensions).
 
 
 ## Description
