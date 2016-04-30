@@ -91,4 +91,4 @@ For more details of Den-Den Markdown syntax, see http://conv.denshochan.com/mark
 
 ## Contact
 
-[Contact](https://docs.google.com/forms/d/1MAbCiYzr4w_q0XbQgX56voC0dq7N7WrhN95LzhgERp8/viewform)
+[Contact form](https://docs.google.com/forms/d/1MAbCiYzr4w_q0XbQgX56voC0dq7N7WrhN95LzhgERp8/viewform)
