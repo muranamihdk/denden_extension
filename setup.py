@@ -3,6 +3,7 @@ from setuptools import setup
 setup (
     name='denden_extension',
     version='1.0.0',
+    author="Hideaki Muranami",
     description='Python-Markdown extention for Den-Den Markdown',
     url='https://github.com/muranamihdk/denden_extension',
     license='MIT',
