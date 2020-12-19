@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup
+
+with open("README.md", "r", encoding="utf-8") as f:
+    long_description = f.read()
+
 setup (
     name='denden_extension',
     version='1.0.0',
     author="Hideaki Muranami",
     description='Python-Markdown extention for Den-Den Markdown',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='https://github.com/muranamihdk/denden_extension',
     license='MIT',
     classifiers=[
