@@ -14,8 +14,6 @@ License: [MIT](http://opensource.org/licenses/MIT)
 
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import BlockProcessor
