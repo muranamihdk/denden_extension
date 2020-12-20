@@ -6,9 +6,9 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup (
     name='denden_extension',
-    version='1.0.1',
+    version='1.0.0',
     author="Hideaki Muranami",
-    description='Python-Markdown extention for Den-Den Markdown',
+    description='Python-Markdown extention for DenDenMarkdown',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/muranamihdk/denden_extension',
