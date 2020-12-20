@@ -8,7 +8,7 @@ setup (
     name='denden_extension',
     version='1.0.1',
     author="Hideaki Muranami",
-    description='Python-Markdown extention for DenDenMarkdown',
+    description='Python-Markdown extension for DenDenMarkdown',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/muranamihdk/denden_extension',
