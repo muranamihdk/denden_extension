@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup (
     name='denden_extension',
-    version='1.0.0',
+    version='1.0.1',
     author="Hideaki Muranami",
     description='Python-Markdown extention for Den-Den Markdown',
     long_description=long_description,
@@ -29,7 +29,7 @@ setup (
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
-    keywords='markdown denden-markdown でんでんマークダウン Japanese epub ruby',
+    keywords='Python-Markdown DenDenMarkdown DTP epub typesetting Japanese ruby でんでんマークダウン 電子書籍 組版 日本語 ルビ',
     py_modules=['denden_extension'],
     install_requires=['markdown>=2.6'],
 )
