@@ -29,7 +29,7 @@ setup (
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
-    keywords='Python-Markdown DenDenMarkdown DTP epub typesetting Japanese ruby でんでんマークダウン 電子書籍 組版 日本語 ルビ',
+    keywords='Python-Markdown DenDenMarkdown DTP epub typesetting Japanese ruby でんでんマークダウン 電子出版 電子書籍 組版 日本語 ルビ',
     py_modules=['denden_extension'],
     install_requires=['markdown>=2.6'],
 )
