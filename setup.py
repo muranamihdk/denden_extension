@@ -16,11 +16,13 @@ setup (
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
         'Intended Audience :: Developers',
         'Natural Language :: Japanese',
         'Topic :: Text Processing :: Filters',
         'Topic :: Text Processing :: Markup',
         'Topic :: Text Processing :: Markup :: HTML',
+        'Topic :: Text Processing :: Markup :: Markdown',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
