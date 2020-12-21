@@ -1,29 +1,36 @@
 # -*- coding: utf-8 -*-
 """
-Den-Den Extension for Python-Markdown
+DenDen Extension for Python-Markdown
 =======================================
 
-Adds Den-Den Markdown handling to Python-Markdown.
+Adds DenDenMarkdown handling to Python-Markdown.
 
 See <https://github.com/muranamihdk/denden_extension>
 for documentation.
 
-Copyright (c) 2015 MURANAMI Hideaki
+Copyright (c) 2015-2020 Hideaki Muranami
 
 License: [MIT](http://opensource.org/licenses/MIT)
 
 """
 
+import re
+import time
+
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import BlockProcessor
-from markdown.inlinepatterns import Pattern
-from markdown.inlinepatterns import SimpleTagPattern
-from markdown.inlinepatterns import EscapePattern
+from markdown.inlinepatterns import InlineProcessor
+from markdown.inlinepatterns import SimpleTagInlineProcessor
 from markdown.postprocessors import Postprocessor
 from markdown import util
-import re
 
+
+"""
+Placeholder for two bytes space
+---------------------------------------------------------------"""
+
+TWO_BYTES_SPACE = "klzzwxh:{}".format(time.time())  # 'klzzwxh:12288'
 
 
 """
@@ -31,78 +38,27 @@ The actual regular expressions for patterns
 ---------------------------------------------------------------"""
 
 # 改ページ（ファイル分割）：===
-DOC_BREAK_RE = r'^[ ]{0,3}(=+[ ]{0,2}){3,}[ ]*'
+DOC_BREAK_RE = r"^[ ]{0,3}(=+[ ]{0,2}){3,}[ ]*"
 
-# \<
-ESCAPE_RE = r'\\(.)'
+#エスケープ記号： \<
+ESCAPE_RE = r"\\(.)"
 
 # ページ番号：[%5] or [%%5]
-PAGE_NUM_RE = r'^\s*?\[(%%?)(\d+?)\]\s*$'
-PAGE_NUM_INLINE_RE = r'\[(%%?)(\d+?)\]'
+PAGE_NUM_RE = r"^\s*?\[(%%?)(\d+?)\]\s*$"  # block
+PAGE_NUM_INLINE_RE = r"\[(%%?)(\d+?)\]"  # inline
 
 # ルビ：{電子書籍|でん|し|しょ|せき}
-RUBY_RE = r'{([^\|]+?)((?:\|.+?)+?)}'
+RUBY_RE = r"{([^\|]+?)((?:\|.+?)+?)}"
 
 # ルビ文字：|でん|し|しょ|せき
-RUBY_RTS_RE = r'\|([^\|]+)'
+RUBY_RTS_RE = r"\|([^\|]+)"
 
 # 横中縦：^21^世紀
-TATE_CHU_YOKO_RE = r'(\^)(.+?)\^'
-
-
-
-"""
-The DenDen Markdown Extension Class
----------------------------------------------------------------"""
-
-class DenDenExtension(Extension):
-    """ DenDen Extension for Python-Markdown. """
-
-    def __init__(self, **kwargs):
-        self.config = {
-            'docbreak' : [True, 'Insert Documentation Breaks.'],
-            'pagenum' : [True, 'Insert Page Numbers.'],
-            'footnote' : [True, 'Substitute Footnotes for XHTML and Epub Format.']}
-        super(DenDenExtension, self).__init__(**kwargs)
-
-    def extendMarkdown(self, md, md_globals):
-
-        # Add preprocessors.
-        md.preprocessors.add('two_bytes_space', TwoBytesSpacePreprocessor(), '_begin')
-
-        # Add blockprocessors.
-        if self.getConfig('docbreak'):
-            md.parser.blockprocessors.add('doc_break', DocBreakProcessor(md.parser), '>hr')
-        if self.getConfig('pagenum'):
-            md.parser.blockprocessors.add('page_num', PageNumProcessor(md.parser), '<paragraph')
-
-        # Add inline patterns.
-        md.inlinePatterns['escape'] = DenDenEscapePattern(ESCAPE_RE, md)
-        if self.getConfig('pagenum'):
-            try:
-                md.inlinePatterns.add('page_num', PageNumTagPattern(PAGE_NUM_INLINE_RE), '>strong2')
-            except ValueError:
-                md.inlinePatterns.add('page_num', PageNumTagPattern(PAGE_NUM_INLINE_RE), '>emphasis2')
-        try:
-            md.inlinePatterns.add('denden_ruby', RubyTagPattern(RUBY_RE, 'ruby,rt'), '>page_num')
-        except ValueError:
-            md.inlinePatterns.add('denden_ruby', RubyTagPattern(RUBY_RE, 'ruby,rt'), '_end')
-        md.inlinePatterns.add('denden_tate_chu_yoko', TateChuYokoTagPattern(TATE_CHU_YOKO_RE, 'span'), '>denden_ruby')
-
-        # Add postprocessors.
-        if self.getConfig('pagenum'):
-            md.postprocessors.add('page_num', PageNumPostprocessor(), '_end')
-        if self.getConfig('footnote'):
-            try:
-                md.postprocessors.add('footnote_sub', FootnoteSubPostprocessor(), '>footnote')
-            except ValueError:
-                md.postprocessors.add('footnote_sub', FootnoteSubPostprocessor(), '_end')
-        md.postprocessors.add('two_bytes_space', TwoBytesSpacePostprocessor(), '_end')
-
+TATE_CHU_YOKO_RE = r"(\^)(.+?)\^"
 
 
 """
-The classes for DenDen Markdown syntax
+The classes for DenDenMarkdown syntax
 ---------------------------------------------------------------"""
 
 class TwoBytesSpacePreprocessor(Preprocessor):
@@ -111,7 +67,7 @@ class TwoBytesSpacePreprocessor(Preprocessor):
     def run(self, lines):
         new_lines = []
         for line in lines:
-            new_lines.append(re.sub(r'　', 'klzzwxh:12288', line))
+            new_lines.append(re.sub(r"　", TWO_BYTES_SPACE, line))
         return new_lines
 
 
@@ -122,19 +78,19 @@ class DocBreakProcessor(BlockProcessor):
 
     def test(self, parent, block):
         m = self.SEARCH_RE.search(block)
-        if m and (m.end() == len(block) or block[m.end()] == '\n'):
+        if m and (m.end() == len(block) or block[m.end()] == "\n"):
             self.match = m
             return True
         return False
 
     def run(self, parent, blocks):
         block = blocks.pop(0)
-        prelines = block[:self.match.start()].rstrip('\n')
+        prelines = block[:self.match.start()].rstrip("\n")
         if prelines:
             self.parser.parseBlocks(parent, [prelines])
         el = util.etree.SubElement(parent, 'hr')
         el.set('class', 'docbreak')
-        postlines = block[self.match.end():].lstrip('\n')
+        postlines = block[self.match.end():].lstrip("\n")
         if postlines:
             blocks.insert(0, postlines)
 
@@ -149,79 +105,86 @@ class PageNumProcessor(BlockProcessor):
     def run(self, parent, blocks):
         block = blocks.pop(0)
         m = self.RE.search(block)
+        percent_sign = m.group(1)
+        page_num = m.group(2)
         el = util.etree.SubElement(parent, 'div')
         el.attrib = {
-            'id': 'pagenum_{}'.format(m.group(2)),
-            'class': 'pagenum',
-            'title': m.group(2),
-            'epub:type': 'pagebreak'}
-        if m.group(1) == '%%':
-            el.text = m.group(2).strip()
+            'id': "pagenum_{}".format(page_num),
+            'class': "pagenum",
+            'title': page_num,
+            'epub:type': "pagebreak"}
+        if percent_sign == "%%":
+            el.text = page_num.strip()
 
 
-class DenDenEscapePattern(EscapePattern):
-    """ Return an escaped character. """
-
-    def handleMatch(self, m):
-        char = m.group(2)
-        ESCAPED_CHARS = self.markdown.ESCAPED_CHARS
-        ESCAPED_CHARS.append('|')
-        if char in ESCAPED_CHARS:
-            return '%s%s%s' % (util.STX, ord(char), util.ETX)
+class DenDenEscapeInlineProcessor(InlineProcessor):
+    """
+    Add "|" into the characters which should be escaped and
+    Return an escaped character.
+    """
+    def handleMatch(self, m, data):
+        char = m.group(1)
+        ESCAPED_CHARS = self.md.ESCAPED_CHARS
+        ESCAPED_CHARS.append("|")
+        if char in self.md.ESCAPED_CHARS:
+            return "{}{}{}".format(util.STX, ord(char), util.ETX), m.start(0), m.end(0)
         else:
-            return None
+            return None, m.start(0), m.end(0)
 
 
-class PageNumTagPattern(Pattern):
+class PageNumTagProcessor(InlineProcessor):
     """
     Return a 'pagenum' class element containing the matching text.
     """
-    def handleMatch(self, m):
-        if not m.group(1).strip() or m.group(1).endswith('\n'):  # There is no string before the matched part
+    def handleMatch(self, m, data):
+        matched_part = m.group(0)
+        percent_sign = m.group(1)
+        page_num = m.group(2)
+        if m.start(0) == 0 or data[m.start(0) -1] == "\n":  # if line(data) starts with matched_part or matched_part is preceded by a new line
             el = util.etree.Element('div')
         else:  # There is a string before the matched part
             el = util.etree.Element('span')
         el.attrib = {
-            'id': 'pagenum_{}'.format(m.group(3)),
-            'class': 'pagenum',
-            'title': m.group(3),
-            'epub:type': 'pagebreak'}
-        if m.group(2) == '%%':
-            el.text = m.group(3)
-        return el
+            'id': "pagenum_{}".format(page_num),
+            'class': "pagenum",
+            'title': page_num,
+            'epub:type': "pagebreak"}
+        if percent_sign == "%%":
+            el.text = page_num
+        return el, m.start(0), m.end(0)
 
 
-class RubyTagPattern(SimpleTagPattern):
+class RubyTagProcessor(SimpleTagInlineProcessor):
     """Return a ruby element."""
-
-    def handleMatch(self, m):
-        tag1, tag2 = self.tag.split(",")
-        ruby_texts = re.findall(RUBY_RTS_RE, m.group(3))
-        if len(m.group(2)) == len(ruby_texts):
-            el1 = util.etree.Element(tag1)
-            el1.text = m.group(2)[0]
+    def handleMatch(self, m, data):
+        ruby_tag, rt_tag = self.tag.split(",")
+        ruby_texts = re.findall(RUBY_RTS_RE, m.group(2))
+        body_text = m.group(1)
+        if len(body_text) == len(ruby_texts):
+            ruby_element = util.etree.Element(ruby_tag)
+            ruby_element.text = body_text[0]
             for idx, ruby_text in enumerate(ruby_texts):
-                el2 = util.etree.SubElement(el1, tag2)
-                el2.text = ruby_text
-                if idx < len(m.group(2)) - 1:
-                    el2.tail = m.group(2)[idx+1]
+                rt_element = util.etree.SubElement(ruby_element, rt_tag)
+                rt_element.text = ruby_text
+                if idx +1 < len(body_text):
+                    rt_element.tail = body_text[idx+1]
         else:
-            el1 = util.etree.Element(tag1)
-            el1.text = m.group(2)
-            el2 = util.etree.SubElement(el1, tag2)
-            el2.text = re.sub(r'\|', '', m.group(3))
-        return el1
+            ruby_element = util.etree.Element(ruby_tag)
+            ruby_element.text = body_text
+            rt_element = util.etree.SubElement(ruby_element, rt_tag)
+            rt_element.text = re.sub(r'\|', '', m.group(2))
+        return ruby_element, m.start(0), m.end(0)
 
 
-class TateChuYokoTagPattern(SimpleTagPattern):
+class TateChuYokoTagProcessor(SimpleTagInlineProcessor):
     """
     Return a 'tcy' class element containing the matching text.
     """
-    def handleMatch(self, m):
+    def handleMatch(self, m, data):
         el = util.etree.Element(self.tag)
-        el.text = m.group(3)
+        el.text = m.group(2)
         el.set('class', 'tcy')
-        return el
+        return el, m.start(0), m.end(0)
 
 
 class PageNumPostprocessor(Postprocessor):
@@ -271,10 +234,71 @@ class TwoBytesSpacePostprocessor(Postprocessor):
     """ Restore two bytes spaces. """
 
     def run(self, text):
-        return text.replace('klzzwxh:12288', '　')
+        return text.replace(TWO_BYTES_SPACE, "　")
 
+
+"""
+The DenDenMarkdown Extension Class
+---------------------------------------------------------------"""
+
+class DenDenExtension(Extension):
+    """ DenDen Extension for Python-Markdown. """
+
+    def __init__(self, **kwargs):
+        self.config = {
+            'docbreak' : [True, 'Insert Documentation Breaks.'],
+            'pagenum' : [True, 'Insert Page Numbers.'],
+            'footnote' : [True, 'Substitute Footnotes for XHTML and Epub Format.']}
+        super(DenDenExtension, self).__init__(**kwargs)
+
+    #def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
+        '''
+        All items are automatically sorted by the value of the “priority” parameter such that the item with the highest value will be processed first.
+        https://python-markdown.github.io/extensions/api/#registries
+        If an item is registered with a "name" which already exists, the
+        existing item is replaced with the new item.
+        markdown/util.py
+        '''
+
+        # Add preprocessors.
+        #md.preprocessors.add('two_bytes_space', TwoBytesSpacePreprocessor(), '_begin')
+        md.preprocessors.register(TwoBytesSpacePreprocessor(md), 'two_bytes_space', 40)  # top
+
+        # Add blockprocessors.
+        if self.getConfig('docbreak'):
+            md.parser.blockprocessors.register(DocBreakProcessor(md.parser), 'doc_break', 45)  # after 'hr'
+        if self.getConfig('pagenum'):
+            md.parser.blockprocessors.register(PageNumProcessor(md.parser), 'page_num', 15)  # before 'paragraph'
+
+        # Add inline patterns.
+        md.inlinePatterns.register(DenDenEscapeInlineProcessor(ESCAPE_RE, md), 'escape', 180)  # overwrite
+        if self.getConfig('pagenum'):
+            try:
+                md.inlinePatterns.register(PageNumTagProcessor(PAGE_NUM_INLINE_RE, md), 'page_num', 15)  # after 'strong2'
+            except ValueError:
+                md.inlinePatterns.register(PageNumTagProcessor(PAGE_NUM_INLINE_RE, md), 'page_num', 5)  # after 'emphasis2'
+        try:
+            md.inlinePatterns.register(RubyTagProcessor(RUBY_RE, 'ruby,rt'), 'denden_ruby', 4)  # after 'page_num'
+        except ValueError:
+            md.inlinePatterns.register(RubyTagProcessor(RUBY_RE, 'ruby,rt'), 'denden_ruby', 3)  # end
+        md.inlinePatterns.register(TateChuYokoTagProcessor(TATE_CHU_YOKO_RE, 'span'), 'denden_tate_chu_yoko', 2)  # after 'denden_ruby'
+
+        # Add postprocessors.
+        if self.getConfig('pagenum'):
+            md.postprocessors.register(PageNumPostprocessor(md), 'page_num', 8)  # end
+        if self.getConfig('footnote'):
+            """
+            try:
+                md.postprocessors.add('footnote_sub', FootnoteSubPostprocessor(), '>footnote')  # after the 'footnote' key item
+            except ValueError:
+                #md.postprocessors.add('footnote_sub', FootnoteSubPostprocessor(), '_end')
+                md.postprocessors.register(FootnoteSubPostprocessor(md), 'footnote_sub', 6)
+            """
+            md.postprocessors.register(FootnoteSubPostprocessor(md), 'footnote_sub', 6)  # end
+        md.postprocessors.register(TwoBytesSpacePostprocessor(md), 'two_bytes_space', 4)  # end
 
 
 def makeExtension(**kwargs):
-    """ Return an instance of the DenDenExtension """
+    """ Return an instance of the DenDenExtension class """
     return DenDenExtension(**kwargs)
