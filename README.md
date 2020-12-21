@@ -97,7 +97,7 @@ For more details of DenDenMarkdown syntax, see http://conv.denshochan.com/markdo
 
 ## Change log
 
-- 2.0 (2020-12-28) -- suport only Python-Markdown 3.0 and Python3
+- 2.0 (2020-12-21) -- suport only Python-Markdown >= 3.0.0, < 3.1 and Python3
 - 1.0 (2016-04-29) -- formal release
 - 0.1 (2015-08-23) -- first experimental release
 
